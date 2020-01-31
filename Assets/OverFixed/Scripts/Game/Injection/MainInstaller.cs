@@ -1,9 +1,12 @@
 using Zenject;
 
-public class MainInstaller : MonoInstaller
+namespace OverFixed.Scripts.Game.Injection
 {
-    public override void InstallBindings()
+    public class MainInstaller : MonoInstaller
     {
+        public override void InstallBindings()
+        {
         
+        }
     }
 }
