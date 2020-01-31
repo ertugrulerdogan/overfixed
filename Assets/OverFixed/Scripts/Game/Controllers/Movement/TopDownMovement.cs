@@ -8,6 +8,8 @@ namespace OverFixed.Scripts.Game.Controllers.Movement
     [RequireComponent(typeof(IDirectionalInput), typeof(Rigidbody))]
     public class TopDownMovement : MonoBehaviour
     {
+        [SerializeField] private float _speed;
+        
         private CameraController _cameraController;
         
         private IDirectionalInput _directionalInput;
@@ -30,15 +32,27 @@ namespace OverFixed.Scripts.Game.Controllers.Movement
             }
         }
 
+        private Vector3 _movementAmount;
+        
         [Inject]
         private void Initialize(CameraController cameraController)
         {
             _cameraController = cameraController;
         }
         
-        private void Update()
+        private void FixedUpdate()
         {
-            
+            Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
         }
+
+        private Vector3 GetMovementAmount(float deltaTime)
+        {
+            _movementAmount.x = DirectionalInput.Horizontal * _speed * deltaTime;
+            _movementAmount.y = 0f;
+            _movementAmount.z = DirectionalInput.Vertical * _speed * deltaTime;
+            
+            return Quaternion.Euler(0f, _cameraController.transform.eulerAngles.y, 0f) * _movementAmount;
+        }
+        
     }
 }
