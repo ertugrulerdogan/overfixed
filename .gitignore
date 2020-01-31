@@ -55,6 +55,9 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+# ReSharper related
+*.DotSettings
+
 # Crashlytics generated file
 crashlytics-build.properties
 

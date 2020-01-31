@@ -1,7 +1,7 @@
 {
     "name": "Behaviours",
     "references": [
-        "Models"
+        "GUID:503c928de6aa3b848961b63fae9c5c29"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
