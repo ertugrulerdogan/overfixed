@@ -34,9 +34,9 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();
             Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
-            Container.Bind<ItemController>().AsSingle();
             Container.BindInstance(_rifleBehaviour).AsSingle();
             Container.BindInstance(_extinguisherBehaviour).AsSingle();
+            Container.Bind<ItemController>().AsSingle().NonLazy();
             Container.BindInstance(new ItemBehaviourBase[] {_extinguisherBehaviour, _extinguisherBehaviour});
         }
     }

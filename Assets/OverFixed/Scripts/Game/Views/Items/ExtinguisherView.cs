@@ -9,7 +9,7 @@ namespace OverFixed.Scripts.Game.Views.Items
         
         private void Update()
         {
-            _particles.gameObject.SetActive(Item.Using);
+            _particles.gameObject.SetActive(Item?.Using ?? false);
         }
     }
 }
