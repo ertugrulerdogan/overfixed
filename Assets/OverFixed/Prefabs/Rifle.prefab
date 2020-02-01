@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2237293286484118031}
   - component: {fileID: 2237293286484118016}
+  - component: {fileID: -9012229661966391277}
   m_Layer: 8
   m_Name: Rifle
   m_TagString: Untagged
@@ -124,6 +125,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152e40eac3b54883a606d0a3822c6b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-9012229661966391277
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237293286484118030}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7674794629108942474
 GameObject:
   m_ObjectHideFlags: 0

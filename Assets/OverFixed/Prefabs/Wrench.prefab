@@ -229,6 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8435950455176072991}
   - component: {fileID: 6755364259395543948}
+  - component: {fileID: -2726972118845068339}
   m_Layer: 8
   m_Name: Wrench
   m_TagString: Untagged
@@ -265,6 +266,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 3
+--- !u!65 &-2726972118845068339
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435950455176072990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8435950455942565800
 GameObject:
   m_ObjectHideFlags: 0
