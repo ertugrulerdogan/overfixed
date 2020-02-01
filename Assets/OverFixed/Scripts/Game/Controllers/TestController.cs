@@ -15,7 +15,7 @@ namespace OverFixed.Scripts.Game.Controllers
         
         public void Tick()
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.T))
             {
                 _scrapSpawner.Scatter(Vector3.zero, 10);
             }
