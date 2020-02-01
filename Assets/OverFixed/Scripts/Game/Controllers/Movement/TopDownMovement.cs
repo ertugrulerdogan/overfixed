@@ -43,6 +43,7 @@ namespace OverFixed.Scripts.Game.Controllers.Movement
         private void FixedUpdate()
         {
             Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
+            Rigidbody.MoveRotation(DirectionalInput.LookRotation.normalized);
         }
 
         private Vector3 GetMovementAmount(float deltaTime)
