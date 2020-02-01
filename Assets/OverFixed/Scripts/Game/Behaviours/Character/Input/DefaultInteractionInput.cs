@@ -8,7 +8,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
     public class DefaultInteractionInput : MonoBehaviour, IInteractionInput
     {
         public event Action OnPick;
-        public event Action OnUse;
+        public event Action OnUseDown;
+        public event Action OnUseUp;
 
         [SerializeField] private KeyCode _pickKey;
         [SerializeField] private KeyCode _useKey;
@@ -16,7 +17,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
         public void Update()
         {
             if(Input.GetKeyDown(_pickKey)) OnPick?.Invoke();
-            if(Input.GetKeyDown(_useKey)) OnUse?.Invoke();
+            if(Input.GetKeyDown(_useKey)) OnUseDown?.Invoke();
+            if(Input.GetKeyUp(_useKey)) OnUseUp?.Invoke();
         }
     }
 }
