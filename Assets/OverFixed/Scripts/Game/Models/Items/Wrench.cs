@@ -1,6 +1,6 @@
 namespace OverFixed.Scripts.Game.Models.Items
 {
-    public class Wrench
+    public class Wrench : Item
     {
         public float Strength { get; }
 

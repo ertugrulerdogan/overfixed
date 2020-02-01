@@ -21,6 +21,7 @@ namespace OverFixed.Scripts.Game.Injection
         
         [SerializeField] private RifleBehaviour _rifleBehaviour;
         [SerializeField] private ExtinguisherBehaviour _extinguisherBehaviour;
+        [SerializeField] private WrenchBehaviour _wrenchBehaviour;
 
         public override void InstallBindings()
         {
@@ -36,8 +37,9 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
             Container.BindInstance(_rifleBehaviour).AsSingle();
             Container.BindInstance(_extinguisherBehaviour).AsSingle();
+            Container.BindInstance(_wrenchBehaviour).AsSingle();
             Container.Bind<ItemController>().AsSingle().NonLazy();
-            Container.BindInstance(new ItemBehaviourBase[] {_extinguisherBehaviour, _extinguisherBehaviour});
+            Container.BindInstance(new ItemBehaviourBase[] {_wrenchBehaviour, _extinguisherBehaviour, _rifleBehaviour});
         }
     }
 }
