@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7227720471304626865}
   - component: {fileID: 2767712027462087368}
   - component: {fileID: 7364627826736980242}
+  - component: {fileID: 9116418081684437282}
   m_Layer: 10
   m_Name: LeftWing
   m_TagString: Untagged
@@ -61,6 +62,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireParticles: {fileID: 3449328943919469710}
   _smokeParticles: {fileID: 5574666600151850623}
+--- !u!114 &9116418081684437282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481152310358438131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3408ec0337042dd81f08d0b9d6042e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShipBehaviour: {fileID: 0}
 --- !u!1 &3780702419448935848
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +86,7 @@ GameObject:
   - component: {fileID: 8758648945731744730}
   - component: {fileID: 136568477413822568}
   - component: {fileID: 7038548324293165125}
+  - component: {fileID: 2179440475031461932}
   m_Layer: 10
   m_Name: RightWing
   m_TagString: Untagged
@@ -122,6 +137,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireParticles: {fileID: 8284029167266101158}
   _smokeParticles: {fileID: 4527794653479361005}
+--- !u!114 &2179440475031461932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3780702419448935848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3408ec0337042dd81f08d0b9d6042e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShipBehaviour: {fileID: 0}
 --- !u!1 &4740599067113493909
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,6 +273,7 @@ GameObject:
   - component: {fileID: 6366892037257891468}
   - component: {fileID: 3149060785502640824}
   - component: {fileID: 2679053244489825331}
+  - component: {fileID: 3424035377858105684}
   m_Layer: 10
   m_Name: Forward
   m_TagString: Untagged
@@ -295,6 +324,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireParticles: {fileID: 4077442553101128125}
   _smokeParticles: {fileID: 2628401278446512087}
+--- !u!114 &3424035377858105684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828400420188580013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3408ec0337042dd81f08d0b9d6042e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShipBehaviour: {fileID: 0}
 --- !u!1 &8076948564719973635
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,15 +861,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 378b2c30ef426554495292cb902cb8f4, type: 3}
---- !u!4 &5733744267164347139 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4221402037530588, guid: 378b2c30ef426554495292cb902cb8f4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5736641855045879007}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5574666600151850623 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198603562046773920, guid: 378b2c30ef426554495292cb902cb8f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5736641855045879007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5733744267164347139 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4221402037530588, guid: 378b2c30ef426554495292cb902cb8f4,
     type: 3}
   m_PrefabInstance: {fileID: 5736641855045879007}
   m_PrefabAsset: {fileID: 0}

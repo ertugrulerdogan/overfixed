@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OverFixed.Scripts.Game.Behaviours.Ship;
+using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Ships;
 using OverFixed.Scripts.Game.Views.Ships;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
+using ShipSectionBehaviour = OverFixed.Scripts.Game.Behaviours.Ships.ShipSectionBehaviour;
 
 public class GameController : MonoBehaviour
 {
@@ -58,9 +59,10 @@ public class GameController : MonoBehaviour
             var selectedPlatform = availablePlatforms[Random.Range(0, availablePlatforms.Count)].Platform;
 
             selectedPlatform.IsPlatformOccupied = true;
-            shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
-            shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
-            shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
+            var t = shipBehaviour.transform;
+            t.position = selectedPlatform.SpawnPosition;
+            t.position = selectedPlatform.SpawnPosition;
+            t.rotation = selectedPlatform.SpawnRotation;
 
             shipBehaviour.Ship = new Ship(100, Random.Range(50, 75), selectedPlatform); //for test purpose
 
@@ -68,6 +70,12 @@ public class GameController : MonoBehaviour
             if (shipView != null)
             {
                 shipView.Bind(shipBehaviour.Ship);
+            }
+
+            var shipSectionBehaviours = shipBehaviour.GetComponentsInChildren<ShipSectionBehaviour>().ToList();
+            for (var i = 0; i < shipSectionBehaviours.Count; i++)
+            {
+                shipSectionBehaviours[i].Init(shipBehaviour, shipBehaviour.Ship.ShipSections[i]);
             }
 
             shipBehaviour.Init((ShipState)Random.Range(0,Enum.GetValues(typeof(ShipState)).Length - 1)); //workaround for healthy state

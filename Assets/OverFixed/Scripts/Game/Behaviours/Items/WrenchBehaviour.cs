@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using OverFixed.Scripts.Game.Behaviours.Ship;
+using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Data;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
@@ -22,8 +22,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
         {
             if (_teamData.Scrap > 0.0001f)
             {
-                _teamData.Scrap = Mathf.Max(_teamData.Scrap - Time.deltaTime * Item.Strength, 0f);
-                shipBehaviour.Repair(Item.Strength);
+                var usedScrap = shipBehaviour.Repair(Item.Strength);
+                _teamData.Scrap = Mathf.Max(_teamData.Scrap - usedScrap, 0f);
             }
         }
     }
