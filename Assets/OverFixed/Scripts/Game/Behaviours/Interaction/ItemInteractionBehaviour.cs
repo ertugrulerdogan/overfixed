@@ -3,6 +3,7 @@ using OverFixed.Scripts.Game.Behaviours.Character.Input;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
+using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Interaction
 {
@@ -23,13 +24,17 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private bool _hasItem;
         private bool _shouldPickItem;
-        private ItemBehaviour<Item> _currentItemBehaviour;
-        private List<ItemBehaviour<Item>> _interactableItemBehaviours;
+        private ItemBehaviourBase _currentItemBehaviourBase;
+        private IList<ItemBehaviourBase> _interactableItemBehaviours;
+
+        [Inject]
+        public void Initialize(ItemBehaviourBase[] items)
+        {
+            _interactableItemBehaviours = items;
+        }
         
         private void Awake()
         {
-            _interactableItemBehaviours = new List<ItemBehaviour<Item>>();
-            
             InteractionInput.OnPick += InteractionInput_OnPick;
             InteractionInput.OnUseDown += InteractionInput_OnUseDown;
             InteractionInput.OnUseUp += InteractionInput_OnUseUp;
@@ -42,40 +47,40 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             InteractionInput.OnUseUp -= InteractionInput_OnUseUp;            
         }
         
-        private void Pick(ItemBehaviour<Item> item)
+        private void Pick(ItemBehaviourBase item)
         {
             _hasItem = true;
-            _currentItemBehaviour = item;
-            _currentItemBehaviour.Item.Equipped = true;
+            _currentItemBehaviourBase = item;
+            _currentItemBehaviourBase.BoundItem.Equipped = true;
             
-            _currentItemBehaviour.transform.SetParent(_itemContainer);
-            _currentItemBehaviour.transform.localPosition = Vector3.zero;
-            _currentItemBehaviour.transform.localEulerAngles = Vector3.zero;
+            _currentItemBehaviourBase.transform.SetParent(_itemContainer);
+            _currentItemBehaviourBase.transform.localPosition = Vector3.zero;
+            _currentItemBehaviourBase.transform.localEulerAngles = Vector3.zero;
         }
 
         private void BeginUse()
         {
-            _currentItemBehaviour.Item.Using = true;
+            _currentItemBehaviourBase.BoundItem.Using = true;
         }
 
         private void EndUse()
         {
-            _currentItemBehaviour.Item.Using = false;
+            _currentItemBehaviourBase.BoundItem.Using = false;
         }
 
         private void Drop()
         {
             _hasItem = false;
-            _currentItemBehaviour.Item.Equipped = false;
-            _currentItemBehaviour.Item.Using = false;
+            _currentItemBehaviourBase.BoundItem.Equipped = false;
+            _currentItemBehaviourBase.BoundItem.Using = false;
             
-            _currentItemBehaviour.transform.SetParent(null);
-            _currentItemBehaviour = null;
+            _currentItemBehaviourBase.transform.SetParent(null);
+            _currentItemBehaviourBase = null;
         }
 
-        private ItemBehaviour<Item> GetClosestItem()
+        private ItemBehaviourBase GetClosestItem()
         {
-            return null;
+            return _interactableItemBehaviours[0]; // TODO: Change this
         }
         
         #region Event Listeners

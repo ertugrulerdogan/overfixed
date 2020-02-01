@@ -15,7 +15,7 @@ namespace OverFixed.Scripts.Game.Controllers
         {
             _scrapSpawner = scrapSpawner;
             _rifle = new Rifle();
-//            Object.FindObjectOfType<RifleBehaviour>().Bind(_rifle);
+            Object.FindObjectOfType<RifleBehaviour>().Bind(_rifle);
         }
         
         public void Tick()

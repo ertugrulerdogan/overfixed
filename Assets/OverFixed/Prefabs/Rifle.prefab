@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2237293286187354809}
   - component: {fileID: 2237293286187354812}
   - component: {fileID: 2237293286187354811}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2237293286484118031}
   - component: {fileID: 2237293286484118016}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
