@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace OverFixed.Scripts.Game.Controllers.Input
+namespace OverFixed.Scripts.Game.Behaviours.Character.Input
 {
-    public interface IDirectionalInput
+    public interface IDirectionalInput : IInput
     {
         Quaternion LookRotation { get; }
         

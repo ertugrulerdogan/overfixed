@@ -1,16 +1,15 @@
-using OverFixed.Scripts.Game.Controllers.Camera;
-using OverFixed.Scripts.Game.Controllers.Input;
+using OverFixed.Scripts.Game.Behaviours.Character.Input;
 using UnityEngine;
 using Zenject;
 
-namespace OverFixed.Scripts.Game.Controllers.Movement
+namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
 {
     [RequireComponent(typeof(IDirectionalInput), typeof(Rigidbody))]
-    public class TopDownMovement : MonoBehaviour
+    public class TopDownMovement : MonoBehaviour, IMovement
     {
         [SerializeField] private float _speed;
         
-        private CameraController _cameraController;
+        private Camera _mainCamera;
         
         private IDirectionalInput _directionalInput;
         private IDirectionalInput DirectionalInput
@@ -35,25 +34,29 @@ namespace OverFixed.Scripts.Game.Controllers.Movement
         private Vector3 _movementAmount;
         
         [Inject]
-        private void Initialize(CameraController cameraController)
+        private void Initialize(Camera mainCamera)
         {
-            _cameraController = cameraController;
+            _mainCamera = mainCamera;
         }
         
         private void FixedUpdate()
         {
-            Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
-            Rigidbody.MoveRotation(DirectionalInput.LookRotation.normalized);
+            Move();
         }
-
+        
+        public void Move()
+        {
+            Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
+            Rigidbody.MoveRotation(DirectionalInput.LookRotation.normalized);            
+        }
+        
         private Vector3 GetMovementAmount(float deltaTime)
         {
             _movementAmount.x = DirectionalInput.Horizontal * _speed * deltaTime;
             _movementAmount.y = 0f;
             _movementAmount.z = DirectionalInput.Vertical * _speed * deltaTime;
             
-            return Quaternion.Euler(0f, _cameraController.transform.eulerAngles.y, 0f) * _movementAmount;
+            return Quaternion.Euler(0f, _mainCamera.transform.eulerAngles.y, 0f) * _movementAmount;
         }
-        
     }
 }

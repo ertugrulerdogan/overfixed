@@ -1,8 +1,7 @@
-using OverFixed.Scripts.Game.Controllers.Camera;
 using UnityEngine;
 using Zenject;
 
-namespace OverFixed.Scripts.Game.Controllers.Input
+namespace OverFixed.Scripts.Game.Behaviours.Character.Input
 {
     using Input = UnityEngine.Input;
     
@@ -12,17 +11,17 @@ namespace OverFixed.Scripts.Game.Controllers.Input
         public float Vertical { get; private set; }
         public float Horizontal { get; private set; }
 
-        private CameraController _cameraController;
+        private Camera _mainCamera;
         
         [Inject]
-        private void Initialize(CameraController cameraController)
+        private void Initialize(Camera mainCamera)
         {
-            _cameraController = cameraController;
+            _mainCamera = mainCamera;
         }
         
         public void Update()
         {
-            LookRotation = Quaternion.Euler(0f, GetAngle(_cameraController.GetScreenPosition(transform.position), Input.mousePosition), 0f);
+            LookRotation = Quaternion.Euler(0f, GetAngle(_mainCamera.WorldToScreenPoint(transform.position), Input.mousePosition), 0f);
             
             Vertical = Input.GetAxis("Vertical");
             Horizontal = Input.GetAxis("Horizontal");
