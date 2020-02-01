@@ -9,9 +9,9 @@ public class GameController : MonoBehaviour
     private ShipBehaviour.Pool _shipPool;
 
     [Inject]
-    private void Construct(HangarBehaviour hangarBehaviour)
+    private void Construct(ShipBehaviour.Pool shipPool)
     {
-        HangarBehaviour = hangarBehaviour;
+        _shipPool = shipPool;
     }
 
     private void Update()
@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
             
             for (var i = 0; i < platforms.Length; i++)
             {
-                if (platforms[i])
+                if (!platforms[i])
                 {
                     availablePlatforms.Add(i);
                 }   

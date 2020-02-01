@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Models;
 using UnityEngine;
 using Zenject;
@@ -9,8 +10,9 @@ namespace OverFixed.Scripts.Game.Behaviours
     {
         public Ship Ship;
 
+
         [Inject]
-        private void Construct(Ship ship)
+        public void Construct(Ship ship)
         {
             Ship = ship;
         }
@@ -25,7 +27,7 @@ namespace OverFixed.Scripts.Game.Behaviours
             
         }
 
-        public class Pool : MemoryPool<ShipBehaviour>
+        public class Pool : MonoMemoryPool<ShipBehaviour>
         {
 
         }

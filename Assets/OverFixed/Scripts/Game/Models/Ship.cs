@@ -8,6 +8,7 @@ namespace OverFixed.Scripts.Game.Models
         OnFire,
         Damaged,
     }
+
     public class Ship
     {
         public float MaxHealth;
