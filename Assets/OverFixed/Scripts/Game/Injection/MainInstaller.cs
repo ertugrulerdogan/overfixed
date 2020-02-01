@@ -1,4 +1,5 @@
 using OverFixed.Scripts.Game.Behaviours.Bullets;
+using OverFixed.Scripts.Game.Behaviours.Drones;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Behaviours.Ships;
@@ -21,6 +22,7 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private ExtinguisherBehaviour _extinguisherBehaviour;
         [SerializeField] private WrenchBehaviour _wrenchBehaviour;
         [SerializeField] private CutterBehaviour _cutterBehaviour;
+        [SerializeField] private DroneBehaviour _drone;
 
         public override void InstallBindings()
         {
@@ -40,6 +42,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindInstance(_cutterBehaviour).AsSingle();
             Container.Bind<ItemController>().AsSingle().NonLazy();
             Container.BindInstance(new ItemBehaviourBase[] {_wrenchBehaviour, _extinguisherBehaviour, _rifleBehaviour, _cutterBehaviour});
+            Container.BindMemoryPool<DroneBehaviour, DroneBehaviour.Pool>().WithInitialSize(20).FromComponentInNewPrefab(_drone);
         }
     }
 }

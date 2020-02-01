@@ -974,6 +974,7 @@ MonoBehaviour:
   _extinguisherBehaviour: {fileID: 1107111403}
   _wrenchBehaviour: {fileID: 5327658742585178918}
   _cutterBehaviour: {fileID: 6778510510580355776}
+  _drone: {fileID: -7201226400876801954, guid: d52ee4743643c534b98424885d53612a, type: 3}
 --- !u!1 &1539577835
 GameObject:
   m_ObjectHideFlags: 0
