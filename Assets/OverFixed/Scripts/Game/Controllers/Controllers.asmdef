@@ -1,3 +1,17 @@
-﻿{
-	"name": "Controllers"
+{
+    "name": "Controllers",
+    "references": [
+        "Behaviours",
+        "Models",
+        "Views"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

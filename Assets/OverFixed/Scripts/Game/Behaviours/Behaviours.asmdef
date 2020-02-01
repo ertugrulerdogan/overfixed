@@ -1,7 +1,8 @@
 {
     "name": "Behaviours",
     "references": [
-        "GUID:503c928de6aa3b848961b63fae9c5c29"
+        "GUID:503c928de6aa3b848961b63fae9c5c29",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

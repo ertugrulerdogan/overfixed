@@ -4,7 +4,8 @@
         "Zenject",
         "Models",
         "Views",
-        "Controllers"
+        "Controllers",
+        "Behaviours"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
