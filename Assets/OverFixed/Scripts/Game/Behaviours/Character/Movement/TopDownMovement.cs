@@ -57,15 +57,16 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             Velocity = transform.position - _lastPosition;
             _lastPosition = transform.position;
 
-            if (Velocity.magnitude> 0.1f)
+            if (Velocity.magnitude > 0.1f)
             {
-                transform.forward = Velocity.normalized;                
+                transform.forward = Velocity.normalized;
             }
         }
 
         public void Move()
         {
-            Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
+            Vector3 moveAmount = GetMovementAmount(Time.fixedDeltaTime);
+            Rigidbody.MovePosition(Rigidbody.position + moveAmount);
         }
         
         private Vector3 GetMovementAmount(float deltaTime)

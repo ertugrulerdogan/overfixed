@@ -11,9 +11,6 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
         public event Action OnUseStarted;
         public event Action OnUseEnded;
 
-        [SerializeField] private KeyCode _pickKey;
-        [SerializeField] private KeyCode _useKey;
-
         private bool _useToggle;
                 
         public void OnPick()

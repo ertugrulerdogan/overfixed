@@ -35,7 +35,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Animation
             
         }
 
-        public void OnItemUsing()
+        public void OnItemDuringUsage()
         {
             
         }

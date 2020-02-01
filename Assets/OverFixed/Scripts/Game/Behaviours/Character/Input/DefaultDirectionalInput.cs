@@ -27,7 +27,6 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
         
         public void Update()
         {
-//            LookRotation = Quaternion.Euler(0f, GetAngle(_mainCamera.WorldToScreenPoint(transform.position), Input.mousePosition), 0f);
 //            
 //            Vertical = Input.GetAxis("Vertical");
 //            Horizontal = Input.GetAxis("Horizontal");
