@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Ship;
 using OverFixed.Scripts.Game.Models.Ships;
 using OverFixed.Scripts.Game.Views.Ships;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -60,7 +62,7 @@ public class GameController : MonoBehaviour
             shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
             shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
 
-            shipBehaviour.Ship = new Ship(100, 50, ShipState.Healthy, 50, 10, selectedPlatform); //for test purpose
+            shipBehaviour.Ship = new Ship(100, Random.Range(50, 75), selectedPlatform); //for test purpose
 
             var shipView = shipBehaviour.GetComponent<ShipView>();
             if (shipView != null)
@@ -68,6 +70,7 @@ public class GameController : MonoBehaviour
                 shipView.Bind(shipBehaviour.Ship);
             }
 
+            shipBehaviour.Init((ShipState)Random.Range(0,Enum.GetValues(typeof(ShipState)).Length - 1)); //workaround for healthy state
             shipBehaviour.Land();
             return true;
         }
