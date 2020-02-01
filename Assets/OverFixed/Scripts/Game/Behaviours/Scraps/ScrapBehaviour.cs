@@ -1,3 +1,4 @@
+using System;
 using OverFixed.Scripts.Game.Behaviours.Pickupables;
 using OverFixed.Scripts.Game.Models.Data;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
 {
     public class ScrapBehaviour : MonoBehaviour, IPickupable
     {
-        private const float ScrapContribution = 0.1f;
+        public const float ScrapContribution = 0.25f;
         
         public Rigidbody Rigidbody { get; private set; }
         
@@ -32,7 +33,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
         {
             _pool.Despawn(this);
         }
-        
+
         public class Pool : MonoMemoryPool<ScrapBehaviour> { }
     }
 }

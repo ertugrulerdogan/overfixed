@@ -18,7 +18,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
         
         protected override void OnHit(ShipBehaviour shipBehaviour)
         {
-            var scrap = Mathf.RoundToInt(shipBehaviour.Scrap(Item.Strength));
+            var scrap = shipBehaviour.Scrap(Item.Strength);
             _scrapSpawner.Scatter(transform.position, scrap);
         }
     }
