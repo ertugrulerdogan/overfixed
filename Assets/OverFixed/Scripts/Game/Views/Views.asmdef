@@ -1,7 +1,8 @@
 {
     "name": "Views",
     "references": [
-        "GUID:503c928de6aa3b848961b63fae9c5c29"
+        "Models",
+        "Behaviours"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

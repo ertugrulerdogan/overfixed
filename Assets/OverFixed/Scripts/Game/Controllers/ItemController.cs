@@ -6,9 +6,10 @@ namespace OverFixed.Scripts.Game.Controllers
 {
     public class ItemController
     {
-        public ItemController([InjectOptional] RifleBehaviour rifleBehaviour)
+        public ItemController([InjectOptional] RifleBehaviour rifleBehaviour, [InjectOptional] ExtinguisherBehaviour extinguisherBehaviour)
         {
             rifleBehaviour?.Bind(new Rifle());
+            extinguisherBehaviour?.Bind(new Extinguisher());
         }
     }
 }
