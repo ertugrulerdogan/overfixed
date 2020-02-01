@@ -1,4 +1,5 @@
-﻿using OverFixed.Scripts.Game.Models;
+﻿using DG.Tweening;
+using OverFixed.Scripts.Game.Models;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +15,19 @@ namespace OverFixed.Scripts.Game.Behaviours
             Ship = ship;
         }
 
+        public void Land(Vector3 position)
+        {
+            transform.DOMove(position, 5f);
+        }
 
+        public void TakeOff()
+        {
+            
+        }
 
+        public class Pool : MemoryPool<ShipBehaviour>
+        {
+
+        }
     }
 }

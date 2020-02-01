@@ -1,4 +1,6 @@
-﻿namespace OverFixed.Scripts.Game.Models
+﻿using System.Collections.Generic;
+
+namespace OverFixed.Scripts.Game.Models
 {
     public enum ShipState
     {
@@ -8,7 +10,9 @@
     }
     public class Ship
     {
-        public float Health;
+        public float MaxHealth;
+        public float CurrentHealth;
+
         public ShipState State;
     }
 }
