@@ -7,18 +7,26 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
     
     public class DefaultInteractionInput : MonoBehaviour, IInteractionInput
     {
-        public event Action OnPick;
-        public event Action OnUseDown;
-        public event Action OnUseUp;
+        public event Action OnPicked;
+        public event Action OnUseStarted;
+        public event Action OnUseEnded;
 
         [SerializeField] private KeyCode _pickKey;
         [SerializeField] private KeyCode _useKey;
 
-        public void Update()
+        private bool _useToggle;
+                
+        public void OnPick()
         {
-            if(Input.GetKeyDown(_pickKey)) OnPick?.Invoke();
-            if(Input.GetKeyDown(_useKey)) OnUseDown?.Invoke();
-            if(Input.GetKeyUp(_useKey)) OnUseUp?.Invoke();
+            OnPicked?.Invoke();
+        }
+
+        public void OnUse()
+        {            
+            _useToggle = !_useToggle;
+            
+            if(_useToggle) OnUseStarted?.Invoke();
+            else OnUseEnded?.Invoke();
         }
     }
 }

@@ -4,8 +4,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Input
 {
     public interface IInteractionInput : IInput
     {
-        event Action OnPick;
-        event Action OnUseDown;
-        event Action OnUseUp;
+        event Action OnPicked;
+        event Action OnUseStarted;
+        event Action OnUseEnded;
     }
 }

@@ -30,6 +30,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private bool _shouldPickItem;
         private ItemBehaviourBase _currentItemBehaviourBase;
         private IList<ItemBehaviourBase> _interactableItemBehaviours;
+        private IList<ItemBehaviourBase> _accessibleItemBehaviours;
 
         [Inject]
         public void Initialize(ItemBehaviourBase[] items)
@@ -39,16 +40,18 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         
         private void Awake()
         {
-            InteractionInput.OnPick += InteractionInput_OnPick;
-            InteractionInput.OnUseDown += InteractionInput_OnUseDown;
-            InteractionInput.OnUseUp += InteractionInput_OnUseUp;
+            _accessibleItemBehaviours = new List<ItemBehaviourBase>(); 
+            
+            InteractionInput.OnPicked += InteractionInput_OnPick;
+            InteractionInput.OnUseStarted += InteractionInput_OnUseDown;
+            InteractionInput.OnUseEnded += InteractionInput_OnUseUp;
         }
 
         private void OnDestroy()
         {   
-            InteractionInput.OnPick -= InteractionInput_OnPick;
-            InteractionInput.OnUseDown -= InteractionInput_OnUseDown;
-            InteractionInput.OnUseUp -= InteractionInput_OnUseUp;            
+            InteractionInput.OnPicked -= InteractionInput_OnPick;
+            InteractionInput.OnUseStarted -= InteractionInput_OnUseDown;
+            InteractionInput.OnUseEnded -= InteractionInput_OnUseUp;            
         }
         
         private void Pick(ItemBehaviourBase item)
@@ -84,13 +87,13 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private ItemBehaviourBase GetClosestItem()
         {
-            ItemBehaviourBase closest = _interactableItemBehaviours.First();
-            for (int i = 0; i < _interactableItemBehaviours.Count; i++)
+            ItemBehaviourBase closest = _accessibleItemBehaviours.First();
+            for (int i = 0; i < _accessibleItemBehaviours.Count; i++)
             {
-                if (Vector3.Distance(_interactableItemBehaviours[i].transform.position, transform.position) <
+                if (Vector3.Distance(_accessibleItemBehaviours[i].transform.position, transform.position) <
                     Vector3.Distance(closest.transform.position, transform.position))
                 {
-                    closest = _interactableItemBehaviours[i];
+                    closest = _accessibleItemBehaviours[i];
                 }
             }
             
@@ -105,7 +108,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             {
                 Drop();
             }
-            else if(_interactableItemBehaviours.Count > 0)
+            else if(_accessibleItemBehaviours.Count > 0)
             {
                 Pick(GetClosestItem());
             }
@@ -127,19 +130,19 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         
         public void OnInteractionTriggerEnter(Collider other)
         {
-            ItemBehaviour<Item> itemBehaviour = other.GetComponent<ItemBehaviour<Item>>();
-            if (itemBehaviour != null && !_interactableItemBehaviours.Contains(itemBehaviour))
+            ItemBehaviourBase itemBehaviour = other.GetComponent<ItemBehaviourBase>();
+            if (itemBehaviour != null && !_accessibleItemBehaviours.Contains(itemBehaviour))
             {
-                _interactableItemBehaviours.Add(itemBehaviour);
+                _accessibleItemBehaviours.Add(itemBehaviour);
             }
         }
 
         public void OnInteractionTriggerExit(Collider other)
         {
-            ItemBehaviour<Item> itemBehaviour = other.GetComponent<ItemBehaviour<Item>>();
-            if (itemBehaviour != null && _interactableItemBehaviours.Contains(itemBehaviour))
+            ItemBehaviourBase itemBehaviour = other.GetComponent<ItemBehaviourBase>();
+            if (itemBehaviour != null && _accessibleItemBehaviours.Contains(itemBehaviour))
             {
-                _interactableItemBehaviours.Remove(itemBehaviour);
+                _accessibleItemBehaviours.Remove(itemBehaviour);
             }
         }
 

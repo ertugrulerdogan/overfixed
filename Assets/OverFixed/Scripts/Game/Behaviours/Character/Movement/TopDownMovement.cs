@@ -1,5 +1,7 @@
+using System.IO;
 using OverFixed.Scripts.Game.Behaviours.Character.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
@@ -33,6 +35,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             }
         }
 
+        private bool _canMove;
         private Vector3 _movementAmount;
         private Vector3 _lastPosition;
         
@@ -46,11 +49,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
         {
             _lastPosition = transform.position;
         }
-        
+
         private void FixedUpdate()
         {
             Move();
-
+            
             Velocity = transform.position - _lastPosition;
             _lastPosition = transform.position;
 
