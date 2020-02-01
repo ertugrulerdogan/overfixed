@@ -425,8 +425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ecfe3398649dda4e8aea6ffc525c718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraController: {fileID: 0}
+  _cameraController: {fileID: 4616511378803006328}
   _scrap: {fileID: 523527661656636402, guid: da01abc4dacd5df4a92ea8456af08573, type: 3}
+  _bullet: {fileID: 1938234617150232996, guid: eb5b2b2b387269c418c440788249adda, type: 3}
   _ship: {fileID: 3618277198379361545, guid: 4400e54f6a57f4142935032aebd07cc6, type: 3}
 --- !u!1 &1511615823
 GameObject:

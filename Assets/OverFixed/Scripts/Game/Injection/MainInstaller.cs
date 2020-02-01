@@ -1,4 +1,5 @@
 using OverFixed.Scripts.Game.Behaviours;
+using OverFixed.Scripts.Game.Behaviours.Bullets;
 using OverFixed.Scripts.Game.Controllers.Camera;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Controllers;
@@ -14,6 +15,7 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private GameObject _scrap;
         [SerializeField] private GameObject _ship;
+        [SerializeField] private GameObject _bullet;
         
         public override void InstallBindings()
         {
@@ -26,7 +28,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.Bind<HangarBehaviour>().AsSingle();
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();
-
+            Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
         }
     }
 }
