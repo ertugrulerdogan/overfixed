@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     public List<PlatformBehaviour> PlatformBehaviours;
     private ShipBehaviour.Pool _shipPool;
 
+    private float _timer;
+
     [Inject]
     private void Construct(ShipBehaviour.Pool shipPool)
     {
@@ -28,43 +30,48 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (_timer <= 0 && SendShipToAvailablePlatform())
         {
-            var availablePlatforms = PlatformBehaviours.Where(p => !p.Platform.IsPlatformOccupied).ToList();
+            _timer = Random.Range(5f, 10f);
+        }
+        else
+        {
+            _timer -= Time.deltaTime;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Space)) // for test purpose
+        {
+            SendShipToAvailablePlatform();
+        }
+    }
 
-            if (availablePlatforms.Any())
+    private bool SendShipToAvailablePlatform()
+    {
+        var availablePlatforms = PlatformBehaviours.Where(p => !p.Platform.IsPlatformOccupied).ToList();
+
+        if (availablePlatforms.Any())
+        {
+            var shipBehaviour = _shipPool.Spawn();
+
+            var selectedPlatform = availablePlatforms[Random.Range(0, availablePlatforms.Count)].Platform;
+
+            selectedPlatform.IsPlatformOccupied = true;
+            shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
+            shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
+            shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
+
+            shipBehaviour.Ship = new Ship(100, 50, ShipState.Healthy, 50, 10, selectedPlatform); //for test purpose
+
+            var shipView = shipBehaviour.GetComponent<ShipView>();
+            if (shipView != null)
             {
-                var shipBehaviour = _shipPool.Spawn();
-
-                var selectedPlatform = availablePlatforms[Random.Range(0, availablePlatforms.Count)].Platform;
-
-                selectedPlatform.IsPlatformOccupied = true;
-                shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
-                shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
-                shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
-
-                shipBehaviour.Ship = new Ship(100, 50, ShipState.OnFire, 50, 10, selectedPlatform); //for test purpose
-
-                var shipView = shipBehaviour.GetComponent<ShipView>();
-                if (shipView != null)
-                {
-                    shipView.Bind(shipBehaviour.Ship);
-                }
-                
-                shipBehaviour.Land();
+                shipView.Bind(shipBehaviour.Ship);
             }
+
+            shipBehaviour.Land();
+            return true;
         }
 
-        if (Input.GetKeyUp(KeyCode.R)) //for test purpose
-        {
-            var ships = FindObjectsOfType<ShipBehaviour>().ToList();
-            foreach (var ship in ships)
-            {
-                ship.TakeOff(() =>
-                {
-                    _shipPool.Despawn(ship);
-                });
-            }
-        }
+        return false;
     }
 }

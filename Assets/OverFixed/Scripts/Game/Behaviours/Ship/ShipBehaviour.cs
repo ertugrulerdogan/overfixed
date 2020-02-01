@@ -12,6 +12,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
         public Models.Ships.Ship Ship;
         private Pool _pool;
 
+        private bool _isMoving;
+
         [Inject]
         public void Initialize(Pool pool)
         {
@@ -23,36 +25,52 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
             var seq = DOTween.Sequence();
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up * 3f, 5f));
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition, 2f));
+            seq.OnComplete(() => { _isMoving = false; });
+            _isMoving = true;
         }
 
         public void TakeOff(Action onComplete)
         {
             var seq = DOTween.Sequence();
-            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up, 3f));
-            seq.Append(transform.DORotateQuaternion(Quaternion.LookRotation(Ship.Platform.SpawnPosition - Ship.Platform.LandingPosition), 2f));
-            seq.Append(transform.DOMove(Ship.Platform.SpawnPosition, 5f));
+            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up * 3f, 3f));
+            seq.Append(transform.DORotateQuaternion(Quaternion.LookRotation(Ship.Platform.SpawnPosition - Ship.Platform.LandingPosition), 3f));
+            seq.AppendInterval(1f);
+            seq.Append(transform.DOMove(Ship.Platform.SpawnPosition, 2f));
             seq.OnComplete(() =>
             {
                 Ship.Platform.IsPlatformOccupied = false;
+                _isMoving = false;
                 onComplete?.Invoke();
             });
+
+            _isMoving = true;
         }
 
         public void Repair(float amount)
         {
-            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth + amount * Time.deltaTime, 0, Ship.MaxHealth);
+            if (!_isMoving)
+            {
+                Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth + amount * Time.deltaTime, 0, Ship.MaxHealth);
+            }
         }
 
         public float Scrap(float amount)
         {
             var initialAmount = Ship.CurrentHealth;
-            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.MaxHealth);
+            if (!_isMoving)
+            {
+                Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.MaxHealth);
+            }
 
             return initialAmount - Ship.CurrentHealth;
         }
 
         public void Extinguish(float amount)
         {
+            if(!_isMoving)
+            {
+                //Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.MaxHealth);
+            }
             //extinguish logic here
         }
 
@@ -73,6 +91,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
                     break;
             }
 
+            if (Ship.CurrentHealth >= Ship.MaxHealth && !_isMoving)
+            {
+                TakeOff(Destruct);
+            }
+
             if (Ship.CurrentHealth < 0.1f)
             {
                 Destruct();
@@ -87,6 +110,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
         private void Destruct()
         {
             Ship.Platform.IsPlatformOccupied = false;
+            _isMoving = false;
             _pool.Despawn(this);
         }
 

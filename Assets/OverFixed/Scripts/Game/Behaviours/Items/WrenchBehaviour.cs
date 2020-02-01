@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Ship;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
@@ -16,9 +17,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
 
         protected override void UseTick()
         {
-            if (Physics.Raycast(transform.position, transform.forward, out var hit, 5f, _shipMask))
+            var shipInRange = Physics.OverlapSphere(transform.position, 3f, _shipMask)
+                .OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault();
+            if (shipInRange != null)
             {
-                hit.collider.GetComponent<ShipBehaviour>()?.Repair(Item.Strength);
+                shipInRange.GetComponent<ShipBehaviour>()?.Repair(Item.Strength);
             }
         }
     }
