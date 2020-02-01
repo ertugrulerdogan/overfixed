@@ -1,6 +1,7 @@
 using OverFixed.Scripts.Game.Behaviours;
 using OverFixed.Scripts.Game.Behaviours.Bullets;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
+using OverFixed.Scripts.Game.Behaviours.Ship;
 using OverFixed.Scripts.Game.Controllers;
 using OverFixed.Scripts.Game.Models;
 using OverFixed.Scripts.Game.Models.Data;

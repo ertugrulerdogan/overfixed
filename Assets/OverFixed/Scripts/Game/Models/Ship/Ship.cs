@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OverFixed.Scripts.Game.Models
+﻿namespace OverFixed.Scripts.Game.Models.Ship
 {
     public enum ShipType
     {
@@ -13,7 +11,9 @@ namespace OverFixed.Scripts.Game.Models
     {
         None,
         OnFire,
+        Smoking,
         Damaged,
+        Healthy,
     }
 
     public class Ship
@@ -34,7 +34,6 @@ namespace OverFixed.Scripts.Game.Models
             ScrapAmount = scrapAmount;
             SmokeTimer = smokeTimer;
             Platform = platform;
-
         }
     }
 }

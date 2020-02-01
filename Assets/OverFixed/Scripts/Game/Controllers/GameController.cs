@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using OverFixed.Scripts.Game.Behaviours;
+using OverFixed.Scripts.Game.Behaviours.Ship;
 using OverFixed.Scripts.Game.Models;
+using OverFixed.Scripts.Game.Models.Ship;
 using UnityEngine;
 using Zenject;
 
@@ -20,7 +22,8 @@ public class GameController : MonoBehaviour
     {
         foreach (var platformBehaviour in PlatformBehaviours)
         {
-            platformBehaviour.Platform = new Platform(platformBehaviour.LandingTransform.position, platformBehaviour.SpawnTransform.position);
+            platformBehaviour.Platform = new Platform(platformBehaviour.LandingTransform.position,
+                platformBehaviour.SpawnTransform.position, platformBehaviour.SpawnTransform.rotation);
         }
     }
 
@@ -34,19 +37,26 @@ public class GameController : MonoBehaviour
             {
                 var shipBehaviour = _shipPool.Spawn();
                 var selectedPlatform = availablePlatforms[Random.Range(0, availablePlatforms.Count)].Platform;
+
                 selectedPlatform.IsPlatformOccupied = true;
                 shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
+                shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
+                shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
+
                 shipBehaviour.Ship = new Ship(100, 50, ShipState.Damaged, 50, 10, selectedPlatform); //for test purpose
                 shipBehaviour.Land();
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R)) //for test purpose
         {
             var ships = FindObjectsOfType<ShipBehaviour>().ToList();
             foreach (var ship in ships)
             {
-                ship.TakeOff();
+                ship.TakeOff(() =>
+                {
+                    _shipPool.Despawn(ship);
+                });
             }
         }
     }
