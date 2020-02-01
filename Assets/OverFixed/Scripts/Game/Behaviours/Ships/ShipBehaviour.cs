@@ -14,6 +14,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         public Ship Ship;
         private Pool _pool;
         private bool _isMoving;
+
         public float AfterburnerAmount;
 
         [Inject]
@@ -107,16 +108,22 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
                 foreach (var part in Ship.ShipSections)
                 {
                     part.SmokeAmount -= Time.deltaTime;
+                    Ship.SmokeRepairDuration += Time.deltaTime;
                 }
 
-                if (Ship.ShipSections.All(p => p.SmokeAmount < 0) && Ship.State == ShipState.Smoking)
+                if (Ship.SmokeRepairDuration >= Ship.Info.SmokeDuration && Ship.State == ShipState.Smoking)
                 {
+                    foreach (var section in Ship.ShipSections)
+                    {
+                        section.SmokeAmount = 0;
+                    }
+
                     Ship.State = ShipState.Damaged;
                 }
             }
             else
             {
-                Heal(amount);
+                Heal(30); //hardcoded for now
             }
 
             return Ship.CurrentHealth - initialHealth;
@@ -138,18 +145,26 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         {
             if(!_isMoving)
             {
-                section.FireAmount = Mathf.Clamp(section.FireAmount - amount * Time.deltaTime, 0f, float.MaxValue);
-
-                if (Ship.ShipSections.All(s => s.FireAmount <= 0 && s.SmokeAmount <= 0 && Ship.State == ShipState.OnFire))
+                if (section.FireAmount > 0)
                 {
+                    Ship.FireExtinguishDuration += Time.deltaTime;
+                }
+
+                if (Ship.FireExtinguishDuration >= Ship.Info.ExtinguisherDuration && Ship.State == ShipState.OnFire)
+                {
+                    foreach (var s in Ship.ShipSections)
+                    {
+                        s.FireAmount = 0;
+                    }
+
                     Ship.State = ShipState.Damaged;
                 }
             }
         }
 
         #endregion
-
-        private void Update()
+         
+        private void LateUpdate()
         {
             switch (Ship.State)
             {
@@ -168,7 +183,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
             if (Ship.ShipSections.Any(p => p.FireAmount > 0f))
             {
-                Hurt(1f); //change later
+                Hurt(Ship.Info.BurnDamage); //change later
             }
 
             if (Ship.CurrentHealth < 0.1f)
@@ -179,14 +194,14 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         private void Hurt(float amount)
         {
-            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.MaxHealth);
+            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.Info.MaxHealth);
         }
 
         private void Heal(float amount)
         {
-            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth + amount * Time.deltaTime, 0, Ship.MaxHealth);
+            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth + amount * Time.deltaTime, 0, Ship.Info.MaxHealth);
 
-            if (Ship.CurrentHealth >= Ship.MaxHealth)
+            if (Ship.CurrentHealth >= Ship.Info.MaxHealth)
             {
                 Ship.State = ShipState.Healthy;
             }
@@ -194,15 +209,20 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         private void ProcessSmoke()
         {
+            if (_isMoving)
+            {
+                return;
+            }
+
             for (var i = 0; i < Ship.ShipSections.Count; i++)
             {
                 var part = Ship.ShipSections[i];
-                if (part.SmokeAmount > 0.1f)
+                if (part.SmokeAmount > 0f)
                 {
-                    part.SmokeAmount += Time.deltaTime * 0.25f;
+                    part.SmokeAmount += Time.deltaTime;
                 }
 
-                if (part.SmokeAmount >= 5f)
+                if (part.SmokeAmount >= Ship.Info.SmokeDuration)
                 {
                     StartFire(part);
                     Ship.State = ShipState.OnFire;
@@ -213,6 +233,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         private void ProcessFire()
         {
+            if (_isMoving)
+            {
+                return;
+            }
+
             foreach (var part in Ship.ShipSections)
             {
                 if (part.FireAmount > 0)
@@ -229,7 +254,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         private void StartSmoke(Models.Ships.Ship.Section section)
         {
-           section.SmokeAmount = 0.5f; //change later
+           section.SmokeAmount = 0.1f; //change later
         }
 
         private void Destruct()

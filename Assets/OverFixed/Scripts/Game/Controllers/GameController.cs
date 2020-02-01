@@ -7,10 +7,12 @@ using OverFixed.Scripts.Game.Views.Ships;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
-using ShipSectionBehaviour = OverFixed.Scripts.Game.Behaviours.Ships.ShipSectionBehaviour;
 
 public class GameController : MonoBehaviour
 {
+    public List<PlatformBehaviour> PlatformBehaviours;
+    public List<ShipInfo> ShipInfos;
+
     private ShipBehaviour.Pool _shipPool;
     private IList<PlatformBehaviour> _platformBehaviours;
 
@@ -42,7 +44,7 @@ public class GameController : MonoBehaviour
         {
             _timer -= Time.deltaTime;
         }
-        
+
         if (Input.GetKeyUp(KeyCode.Space)) // for test purpose
         {
             SendShipToAvailablePlatform();
@@ -65,7 +67,9 @@ public class GameController : MonoBehaviour
             t.position = selectedPlatform.SpawnPosition;
             t.rotation = selectedPlatform.SpawnRotation;
 
-            shipBehaviour.Ship = new Ship(100, Random.Range(50, 75), selectedPlatform); //for test purpose
+
+            //difficulty calculation here
+            shipBehaviour.Ship = new Ship(ShipInfos[Random.Range(0,ShipInfos.Count)], selectedPlatform); 
 
             var shipView = shipBehaviour.GetComponent<ShipView>();
             if (shipView != null)
@@ -79,7 +83,9 @@ public class GameController : MonoBehaviour
                 shipSectionBehaviours[i].Init(shipBehaviour, shipBehaviour.Ship.ShipSections[i]);
             }
 
-            shipBehaviour.Init((ShipState)Random.Range(0,Enum.GetValues(typeof(ShipState)).Length - 1)); //workaround for healthy state
+            Debug.Log(shipBehaviour.Ship.Info.State);
+
+            shipBehaviour.Init(shipBehaviour.Ship.Info.State); 
             shipBehaviour.Land();
             return true;
         }
