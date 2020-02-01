@@ -2,6 +2,6 @@ namespace OverFixed.Scripts.Game.Models.Data
 {
     public class TeamData
     {
-        public float Scrap { get; set; }
+        public float Scrap { get; set; } = GameRules.MaxScrapAmount;
     }
 }

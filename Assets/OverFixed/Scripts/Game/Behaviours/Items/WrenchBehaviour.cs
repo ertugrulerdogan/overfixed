@@ -1,27 +1,29 @@
 using System;
 using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Ship;
+using OverFixed.Scripts.Game.Models.Data;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
+using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Items
 {
-    public class WrenchBehaviour : ItemBehaviour<Wrench>
+    public class WrenchBehaviour : SpherecastItemBehaviour<Wrench>
     {
-        private LayerMask _shipMask;
-
-        private void Start()
+        private TeamData _teamData;
+        
+        [Inject]
+        public void Initialize(TeamData teamData)
         {
-            _shipMask = LayerMask.GetMask("Ship");
+            _teamData = teamData;
         }
-
-        protected override void UseTick()
+        
+        protected override void OnHit(ShipBehaviour shipBehaviour)
         {
-            var shipInRange = Physics.OverlapSphere(transform.position, 3f, _shipMask)
-                .OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault();
-            if (shipInRange != null)
+            if (_teamData.Scrap > 0.0001f)
             {
-                shipInRange.GetComponent<ShipBehaviour>()?.Repair(Item.Strength);
+                _teamData.Scrap = Mathf.Max(_teamData.Scrap - Time.deltaTime * Item.Strength, 0f);
+                shipBehaviour.Repair(Item.Strength);
             }
         }
     }

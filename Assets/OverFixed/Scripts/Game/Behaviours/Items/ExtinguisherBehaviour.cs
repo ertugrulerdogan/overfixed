@@ -16,7 +16,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
 
         protected override void UseTick()
         {
-            if (Physics.Raycast(transform.position, transform.forward, out var hit, 3f, _shipMask))
+            if (Physics.Raycast(transform.position - transform.forward, transform.forward, out var hit, 6f, _shipMask))
             {
                 hit.collider.GetComponent<ShipBehaviour>()?.Extinguish(Item.Strength);
             }

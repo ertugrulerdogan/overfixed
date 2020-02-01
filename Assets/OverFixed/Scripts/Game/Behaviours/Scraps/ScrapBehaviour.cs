@@ -24,7 +24,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
 
         public void Pickup()
         {
-            _teamData.Scrap += ScrapContribution;
+            _teamData.Scrap = Mathf.Min(_teamData.Scrap + ScrapContribution);
             Despawn();
         }
 
