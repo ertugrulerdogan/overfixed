@@ -12,9 +12,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
     {
         public Ship Ship;
         private Pool _pool;
-
-
         private bool _isMoving;
+        public float AfterburnerAmount;
 
         [Inject]
         public void Initialize(Pool pool)
@@ -53,9 +52,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         public void Land()
         {
+            AfterburnerAmount = 0.5f;
             var seq = DOTween.Sequence();
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up * 3f, 5f));
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition, 2f));
+            seq.Join(DOTween.To(() => AfterburnerAmount, x => AfterburnerAmount = x, 0, 2));
             seq.OnComplete(() => { _isMoving = false; });
             _isMoving = true;
         }
@@ -70,7 +71,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             var seq = DOTween.Sequence();
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up * 3f, 3f));
             seq.Append(transform.DORotateQuaternion(Quaternion.LookRotation(Ship.Platform.SpawnPosition - Ship.Platform.LandingPosition), 3f));
-            seq.AppendInterval(1f);
+            seq.AppendInterval(0.5f);
+            seq.Join(DOTween.To(() => AfterburnerAmount, x => AfterburnerAmount = x, 1, 2));
             seq.Append(transform.DOMove(Ship.Platform.SpawnPosition, 2f));
             seq.OnComplete(() =>
             {

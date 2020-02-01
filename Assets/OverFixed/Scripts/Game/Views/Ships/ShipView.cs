@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,10 @@ namespace OverFixed.Scripts.Game.Views.Ships
 
         [SerializeField]
         private List<ShipSectionView> _shipPartViews;
+
+        private ShipBehaviour _shipBehaviour;
+
+        public AfterBurner AfterBurner;
 
         [Inject]
         public void Initialize(UIManager manager)
@@ -33,6 +38,8 @@ namespace OverFixed.Scripts.Game.Views.Ships
                     _bar.Init(this);
                 }
             }
+
+            _shipBehaviour = GetComponent<ShipBehaviour>();
         }
         
         public void Bind(Ship ship) 
@@ -42,12 +49,11 @@ namespace OverFixed.Scripts.Game.Views.Ships
             {
                 _bar.gameObject.SetActive(true);
             }
-
-
         }
 
         private void Update()
         {
+            AfterBurner.SetThrustAmount(_shipBehaviour.AfterburnerAmount);
             _bar.UpdateHealth(_ship.CurrentHealth, _ship.MaxHealth);
 
             for (var i = 0; i < _ship.ShipSections.Count; i++)
