@@ -25,8 +25,6 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Animation
 
         private void Update()
         {
-            Debug.Log($"{Movement.Velocity.ToString()}");
-            
             _animator.SetFloat(CharacterAnimationHashes.Speed, Movement.Velocity.magnitude);
         }
 
