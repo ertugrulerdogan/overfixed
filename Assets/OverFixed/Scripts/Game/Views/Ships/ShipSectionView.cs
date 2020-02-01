@@ -1,5 +1,4 @@
 ﻿using System;
-using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 
 namespace OverFixed.Scripts.Game.Views.Ships
@@ -10,13 +9,6 @@ namespace OverFixed.Scripts.Game.Views.Ships
         private ParticleSystem _fireParticles;
         [SerializeField]
         private ParticleSystem _smokeParticles;
-
-        private Ship.Section _section;
-
-        public void Init(Ship.Section section)
-        {
-            _section = section;
-        }
 
         private void Awake()
         {
@@ -34,11 +26,6 @@ namespace OverFixed.Scripts.Game.Views.Ships
         {
             var emission = _smokeParticles.emission;
             emission.enabled = emit;
-        }
-
-        public Ship.Section GetShipSection()
-        {
-            return _section;
         }
     }
 }

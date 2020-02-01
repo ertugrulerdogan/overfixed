@@ -1,5 +1,5 @@
 using System.Linq;
-using OverFixed.Scripts.Game.Behaviours.Ship;
+using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
 

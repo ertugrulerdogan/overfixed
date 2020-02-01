@@ -1,8 +1,7 @@
-﻿using OverFixed.Scripts.Game.Models;
-using OverFixed.Scripts.Game.Models.Ships;
+﻿using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 
-namespace OverFixed.Scripts.Game.Behaviours.Ship
+namespace OverFixed.Scripts.Game.Behaviours.Ships
 {
     public class PlatformBehaviour : MonoBehaviour
     {

@@ -43,20 +43,17 @@ namespace OverFixed.Scripts.Game.Views.Ships
                 _bar.gameObject.SetActive(true);
             }
 
-            for (var i = 0; i < _shipPartViews.Count; i++)
-            {
-                _shipPartViews[i].Init(_ship.ShipParts[i]);
-            }
+
         }
 
         private void Update()
         {
             _bar.UpdateHealth(_ship.CurrentHealth, _ship.MaxHealth);
 
-            for (var i = 0; i < _ship.ShipParts.Count; i++)
+            for (var i = 0; i < _ship.ShipSections.Count; i++)
             {
-                _shipPartViews[i].SetFireStrength(_ship.ShipParts[i].FireAmount);
-                _shipPartViews[i].SetSmoke(_ship.ShipParts[i].SmokeAmount > 0f && _ship.ShipParts[i].SmokeAmount < 10f);
+                _shipPartViews[i].SetFireStrength(_ship.ShipSections[i].FireAmount);
+                _shipPartViews[i].SetSmoke(_ship.ShipSections[i].SmokeAmount > 0f);
             }
         }
 

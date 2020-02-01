@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace OverFixed.Scripts.Game.Models.Ships
 {
@@ -23,7 +24,8 @@ namespace OverFixed.Scripts.Game.Models.Ships
         public float CurrentHealth;
         public ShipState State;
 
-        public List<Section> ShipParts = new List<Section>();
+        [FormerlySerializedAs("ShipParts")]
+        public List<Section> ShipSections = new List<Section>();
         public Platform Platform;
 
         public Ship(float maxHealth, float currentHealth, Platform platform)
@@ -34,7 +36,7 @@ namespace OverFixed.Scripts.Game.Models.Ships
 
             for (int i = 0; i < 3; i++) //Hardcoded 3 parts for now
             {
-                ShipParts.Add(new Section());
+                ShipSections.Add(new Section());
             }
         }
 
