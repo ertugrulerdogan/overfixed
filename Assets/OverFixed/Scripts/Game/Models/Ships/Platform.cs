@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace OverFixed.Scripts.Game.Models.Ship
+namespace OverFixed.Scripts.Game.Models.Ships
 {
     public class Platform
     {

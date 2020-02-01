@@ -17,6 +17,8 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private GameObject _scrap;
         [SerializeField] private GameObject _ship;
         [SerializeField] private GameObject _bullet;
+        [SerializeField] private UIManager _uiManager;
+        
         [SerializeField] private RifleBehaviour _rifleBehaviour;
 
         public override void InstallBindings()
@@ -26,6 +28,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.Bind<TeamData>().AsSingle();
             Container.BindMemoryPool<ScrapBehaviour, ScrapBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_scrap);
             Container.Bind<ScrapSpawner>().AsSingle();
+            Container.BindInstance(_uiManager).AsSingle();
 
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();

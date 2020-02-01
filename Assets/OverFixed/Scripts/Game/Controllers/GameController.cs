@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using OverFixed.Scripts.Game.Behaviours;
 using OverFixed.Scripts.Game.Behaviours.Ship;
-using OverFixed.Scripts.Game.Models;
-using OverFixed.Scripts.Game.Models.Ship;
+using OverFixed.Scripts.Game.Models.Ships;
+using OverFixed.Scripts.Game.Views.Ships;
 using UnityEngine;
 using Zenject;
 
@@ -36,6 +35,7 @@ public class GameController : MonoBehaviour
             if (availablePlatforms.Any())
             {
                 var shipBehaviour = _shipPool.Spawn();
+
                 var selectedPlatform = availablePlatforms[Random.Range(0, availablePlatforms.Count)].Platform;
 
                 selectedPlatform.IsPlatformOccupied = true;
@@ -44,6 +44,13 @@ public class GameController : MonoBehaviour
                 shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
 
                 shipBehaviour.Ship = new Ship(100, 50, ShipState.Damaged, 50, 10, selectedPlatform); //for test purpose
+
+                var shipView = shipBehaviour.GetComponent<ShipView>();
+                if (shipView != null)
+                {
+                    shipView.Bind(shipBehaviour.Ship);
+                }
+                
                 shipBehaviour.Land();
             }
         }

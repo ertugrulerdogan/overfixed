@@ -1,5 +1,5 @@
 ﻿using OverFixed.Scripts.Game.Models;
-using OverFixed.Scripts.Game.Models.Ship;
+using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 
 namespace OverFixed.Scripts.Game.Behaviours.Ship

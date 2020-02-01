@@ -1,7 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using OverFixed.Scripts.Game.Models;
-using OverFixed.Scripts.Game.Models.Ship;
+using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 using Zenject;
 
@@ -9,19 +9,19 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
 {
     public class ShipBehaviour : MonoBehaviour
     {
-        public Models.Ship.Ship Ship;
+        public Models.Ships.Ship Ship;
 
         public void Land()
         {
             var seq = DOTween.Sequence();
-            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.one * 3f, 5f));
+            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up * 3f, 5f));
             seq.Append(transform.DOMove(Ship.Platform.LandingPosition, 2f));
         }
 
         public void TakeOff(Action onComplete)
         {
             var seq = DOTween.Sequence();
-            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.one, 3f));
+            seq.Append(transform.DOMove(Ship.Platform.LandingPosition + Vector3.up, 3f));
             seq.Append(transform.DORotateQuaternion(Quaternion.LookRotation(Ship.Platform.SpawnPosition - Ship.Platform.LandingPosition), 2f));
             seq.Append(transform.DOMove(Ship.Platform.SpawnPosition, 5f));
             seq.OnComplete(() =>
