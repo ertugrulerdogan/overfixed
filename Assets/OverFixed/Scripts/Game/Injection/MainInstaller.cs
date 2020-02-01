@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OverFixed.Scripts.Game.Behaviours.Bullets;
 using OverFixed.Scripts.Game.Behaviours.Drones;
 using OverFixed.Scripts.Game.Behaviours.Items;
@@ -17,6 +18,7 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private GameObject _ship;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private UIManager _uiManager;
+        [SerializeField] private PlatformBehaviour[] _platformBehaviours;
         
         [SerializeField] private RifleBehaviour _rifleBehaviour;
         [SerializeField] private ExtinguisherBehaviour _extinguisherBehaviour;
@@ -43,6 +45,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.Bind<ItemController>().AsSingle().NonLazy();
             Container.BindInstance(new ItemBehaviourBase[] {_wrenchBehaviour, _extinguisherBehaviour, _rifleBehaviour, _cutterBehaviour});
             Container.BindMemoryPool<DroneBehaviour, DroneBehaviour.Pool>().WithInitialSize(20).FromComponentInNewPrefab(_drone);
+            Container.BindInstance<IList<PlatformBehaviour>>(_platformBehaviours).AsSingle();
         }
     }
 }

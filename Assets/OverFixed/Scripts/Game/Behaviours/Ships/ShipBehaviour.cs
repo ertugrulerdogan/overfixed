@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DG.Tweening;
+using OverFixed.Scripts.Game.Behaviours.Hittables;
 using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 using Zenject;
@@ -8,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace OverFixed.Scripts.Game.Behaviours.Ships
 {
-    public class ShipBehaviour : MonoBehaviour
+    public class ShipBehaviour : MonoBehaviour, IHittable
     {
         public Ship Ship;
         private Pool _pool;
@@ -236,6 +237,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             Ship.Platform.IsPlatformOccupied = false;
             _isMoving = false;
             _pool.Despawn(this);
+        }
+
+        public void Hit(float damage)
+        {
+            Ship.CurrentHealth -= damage;
         }
 
         public class Pool : MonoMemoryPool<ShipBehaviour>

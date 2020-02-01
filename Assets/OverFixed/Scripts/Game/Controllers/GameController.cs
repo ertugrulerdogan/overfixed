@@ -11,20 +11,21 @@ using ShipSectionBehaviour = OverFixed.Scripts.Game.Behaviours.Ships.ShipSection
 
 public class GameController : MonoBehaviour
 {
-    public List<PlatformBehaviour> PlatformBehaviours;
     private ShipBehaviour.Pool _shipPool;
+    private IList<PlatformBehaviour> _platformBehaviours;
 
     private float _timer;
 
     [Inject]
-    private void Construct(ShipBehaviour.Pool shipPool)
+    private void Construct(ShipBehaviour.Pool shipPool, IList<PlatformBehaviour> platformBehaviours)
     {
         _shipPool = shipPool;
+        _platformBehaviours = platformBehaviours;
     }
 
     private void Awake()
     {
-        foreach (var platformBehaviour in PlatformBehaviours)
+        foreach (var platformBehaviour in _platformBehaviours)
         {
             platformBehaviour.Platform = new Platform(platformBehaviour.LandingTransform.position,
                 platformBehaviour.SpawnTransform.position, platformBehaviour.SpawnTransform.rotation);
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour
 
     private bool SendShipToAvailablePlatform()
     {
-        var availablePlatforms = PlatformBehaviours.Where(p => !p.Platform.IsPlatformOccupied).ToList();
+        var availablePlatforms = _platformBehaviours.Where(p => !p.Platform.IsPlatformOccupied).ToList();
 
         if (availablePlatforms.Any())
         {
