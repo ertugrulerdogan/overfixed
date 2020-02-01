@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace OverFixed.Scripts.Game.Views.Ships
@@ -28,13 +29,26 @@ namespace OverFixed.Scripts.Game.Views.Ships
 
         private void Update()
         {
-            _rect.anchoredPosition = _camera.WorldToScreenPoint(_shipView.transform.position);
+            SetScreenPosition();
         }
 
         public void UpdateHealth(float current, float max)
         {
             _healthFill.fillAmount = current / max;
-            _healthText.text = $"{current}/{max}";
+            _healthText.text = $"{current:N0}/{max:N0}";
+        }
+
+        private void OnEnable()
+        {
+            SetScreenPosition();
+        }
+
+        private void SetScreenPosition()
+        {
+            if (_rect != null)
+            {
+                _rect.anchoredPosition = _camera.WorldToScreenPoint(_shipView.transform.position);
+            }
         }
     }
 }

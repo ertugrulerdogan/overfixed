@@ -10,6 +10,13 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
     public class ShipBehaviour : MonoBehaviour
     {
         public Models.Ships.Ship Ship;
+        private Pool _pool;
+
+        [Inject]
+        public void Initialize(Pool pool)
+        {
+            _pool = pool;
+        }
 
         public void Land()
         {
@@ -40,6 +47,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
         {
             var initialAmount = Ship.CurrentHealth;
             Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - amount * Time.deltaTime, 0f, Ship.MaxHealth);
+
             return initialAmount - Ship.CurrentHealth;
         }
 
@@ -55,6 +63,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
                 case ShipState.None:
                     break;
                 case ShipState.OnFire:
+                    CalculateFireDamage();
                     break;
                 case ShipState.Smoking:
                     break;
@@ -63,6 +72,22 @@ namespace OverFixed.Scripts.Game.Behaviours.Ship
                 case ShipState.Healthy:
                     break;
             }
+
+            if (Ship.CurrentHealth < 0.1f)
+            {
+                Destruct();
+            }
+        }
+
+        private void CalculateFireDamage()
+        {
+            Ship.CurrentHealth = Mathf.Clamp(Ship.CurrentHealth - 5 * Time.deltaTime, 0, Ship.MaxHealth);
+        }
+
+        private void Destruct()
+        {
+            Ship.Platform.IsPlatformOccupied = false;
+            _pool.Despawn(this);
         }
 
         public class Pool : MonoMemoryPool<ShipBehaviour>

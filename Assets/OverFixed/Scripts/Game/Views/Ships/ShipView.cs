@@ -25,7 +25,7 @@ namespace OverFixed.Scripts.Game.Views.Ships
                 var go = Instantiate(statusPrefab, _uiManager.BarParent);
                 if (go != null)
                 {
-                    _bar = go.GetComponent<StatusBar>();
+                    _bar = go.GetComponentInChildren<StatusBar>(true);
                     _bar.Init(this);
                 }
             }
@@ -34,19 +34,15 @@ namespace OverFixed.Scripts.Game.Views.Ships
         public void Bind(Ship ship) 
         { 
            _ship = ship;
+            if (_bar != null)
+            {
+                _bar.gameObject.SetActive(true);
+            }
         }
 
         private void Update()
         {
             _bar.UpdateHealth(_ship.CurrentHealth, _ship.MaxHealth);
-        }
-
-        private void OnEnable()
-        {
-            if (_bar != null)
-            {
-                _bar.gameObject.SetActive(true);
-            }
         }
 
         private void OnDisable()

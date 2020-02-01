@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour
                 shipBehaviour.transform.position = selectedPlatform.SpawnPosition;
                 shipBehaviour.transform.rotation = selectedPlatform.SpawnRotation;
 
-                shipBehaviour.Ship = new Ship(100, 50, ShipState.Damaged, 50, 10, selectedPlatform); //for test purpose
+                shipBehaviour.Ship = new Ship(100, 50, ShipState.OnFire, 50, 10, selectedPlatform); //for test purpose
 
                 var shipView = shipBehaviour.GetComponent<ShipView>();
                 if (shipView != null)
