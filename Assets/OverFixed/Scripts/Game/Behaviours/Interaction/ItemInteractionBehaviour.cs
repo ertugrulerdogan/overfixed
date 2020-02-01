@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Character.Input;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
+using UnityEngine.Events;
 using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Interaction
@@ -11,7 +13,9 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
     public class ItemInteractionBehaviour : MonoBehaviour
     {
         [SerializeField] private Transform _itemContainer;
-
+        [SerializeField] private UnityEvent _onPickUp;
+        [SerializeField] private UnityEvent _onUsing;
+            
         private IInteractionInput _interactionInput;
         private IInteractionInput InteractionInput
         {
@@ -80,7 +84,17 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private ItemBehaviourBase GetClosestItem()
         {
-            return _interactableItemBehaviours[0]; // TODO: Change this
+            ItemBehaviourBase closest = _interactableItemBehaviours.First();
+            for (int i = 0; i < _interactableItemBehaviours.Count; i++)
+            {
+                if (Vector3.Distance(_interactableItemBehaviours[i].transform.position, transform.position) <
+                    Vector3.Distance(closest.transform.position, transform.position))
+                {
+                    closest = _interactableItemBehaviours[i];
+                }
+            }
+            
+            return closest;
         }
         
         #region Event Listeners

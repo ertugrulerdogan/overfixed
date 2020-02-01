@@ -7,6 +7,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
     [RequireComponent(typeof(IDirectionalInput), typeof(Rigidbody))]
     public class TopDownMovement : MonoBehaviour, IMovement
     {
+        public Vector3 Velocity { get; private set; }
+        
         [SerializeField] private float _speed;
         
         private Camera _mainCamera;
@@ -32,22 +34,35 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
         }
 
         private Vector3 _movementAmount;
+        private Vector3 _lastPosition;
         
         [Inject]
         private void Initialize(Camera mainCamera)
         {
             _mainCamera = mainCamera;
         }
+
+        private void Awake()
+        {
+            _lastPosition = transform.position;
+        }
         
         private void FixedUpdate()
         {
             Move();
+
+            Velocity = transform.position - _lastPosition;
+            _lastPosition = transform.position;
+
+            if (Velocity.magnitude> 0.1f)
+            {
+                transform.forward = Velocity.normalized;                
+            }
         }
-        
+
         public void Move()
         {
             Rigidbody.MovePosition(Rigidbody.position + GetMovementAmount(Time.fixedDeltaTime));
-            Rigidbody.MoveRotation(DirectionalInput.LookRotation.normalized);            
         }
         
         private Vector3 GetMovementAmount(float deltaTime)
