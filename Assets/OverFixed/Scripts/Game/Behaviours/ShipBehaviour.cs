@@ -10,20 +10,17 @@ namespace OverFixed.Scripts.Game.Behaviours
     {
         public Ship Ship;
 
-
-        [Inject]
-        public void Construct(Ship ship)
+        public void Land()
         {
-            Ship = ship;
-        }
-
-        public void Land(Vector3 position)
-        {
-            transform.DOMove(position, 5f);
+            var seq = DOTween.Sequence();
+            seq.Append(transform.DOMove(Ship.Platform.LandingPosition, 5f));
         }
 
         public void TakeOff()
         {
+            var seq = DOTween.Sequence();
+            seq.Append(transform.DORotateQuaternion(Quaternion.LookRotation(Ship.Platform.SpawnPosition - Ship.Platform.LandingPosition), 2f));
+            seq.Append(transform.DOMove(Ship.Platform.SpawnPosition, 5f));
             
         }
 

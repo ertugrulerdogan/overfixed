@@ -23,9 +23,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.Bind<TeamData>().AsSingle();
             Container.BindMemoryPool<ScrapBehaviour, ScrapBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_scrap);
             Container.Bind<ScrapSpawner>().AsSingle();
-            Container.Bind<Hangar>().AsSingle();
-            Container.Bind<Ship>().AsSingle();
-            Container.Bind<HangarBehaviour>().AsSingle();
+
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();
             Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
