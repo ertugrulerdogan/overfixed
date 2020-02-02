@@ -28,6 +28,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Explosion
 
         private void OnEnable()
         {
+            transform.localScale = Vector3.one;
             _timer = 0f;
         }
 
