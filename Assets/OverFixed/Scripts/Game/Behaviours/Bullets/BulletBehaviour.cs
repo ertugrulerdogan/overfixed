@@ -15,6 +15,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Bullets
         public delegate void HitEvent(Vector3 position, Vector3 direction);
 
         public event HitEvent OnHit;
+        public event Action OnFire;
 
         private Pool _pool;
         private Bullet _bullet;
@@ -39,14 +40,21 @@ namespace OverFixed.Scripts.Game.Behaviours.Bullets
             _timeoutTween?.Kill();
         }
 
+        public void Fire(Vector3 origin, Quaternion direction)
+        {
+            transform.position = origin;
+            transform.rotation = direction;
+            OnFire?.Invoke();
+        }
+
         private void Update()
         {
             transform.Translate(0f, 0f, Time.deltaTime * _bullet.Speed);
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
-            OnHit?.Invoke(other.GetContact(0).point, transform.forward);
+            OnHit?.Invoke(transform.position, transform.forward);
             other.gameObject.GetComponent<IHittable>()?.Hit(_bullet.Damage);
             _pool.Despawn(this);
         }

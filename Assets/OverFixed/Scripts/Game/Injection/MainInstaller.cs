@@ -15,6 +15,8 @@ namespace OverFixed.Scripts.Game.Injection
 {
     public class MainInstaller : MonoInstaller
     {
+        [SerializeField] private AudioController _audioController;
+        
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private GameObject _scrap;
         [SerializeField] private GameObject _ship;
@@ -33,6 +35,7 @@ namespace OverFixed.Scripts.Game.Injection
         
         public override void InstallBindings()
         {
+            Container.BindInstance(_audioController).AsSingle().NonLazy();
             Container.BindInstance(_mainCamera).AsSingle().NonLazy();
             
             Container.Bind<TeamData>().AsSingle();

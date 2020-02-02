@@ -1,4 +1,3 @@
-using System.Globalization;
 using OverFixed.Scripts.Game.Models.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +18,7 @@ namespace OverFixed.Scripts.Game.Views.UI
 
         private void Update()
         {
-            _text.text = _teamData.Scrap.ToString(CultureInfo.InvariantCulture);
+            _text.text = Mathf.RoundToInt(_teamData.Scrap).ToString();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace OverFixed.Scripts.Game.Views.Ships
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private Slider _smokeSlider;
         [SerializeField] private Image[] _stateImages;
+        [SerializeField] private Image _healthFill;
+        [SerializeField] private Gradient _healthFillGradient;
         private ShipBehaviour _ship;
         private RectTransform _rectTransform;
         private Camera _camera;
@@ -28,7 +30,9 @@ namespace OverFixed.Scripts.Game.Views.Ships
 
         private void Update()
         {
-            _healthSlider.value = _ship.Ship.CurrentHealth / _ship.Ship.Info.MaxHealth;
+            var healthFill = _ship.Ship.CurrentHealth / _ship.Ship.Info.MaxHealth;
+            _healthSlider.value = healthFill;
+            _healthFill.color = _healthFillGradient.Evaluate(healthFill);
             for (int i = 0; i < _stateImages.Length; i++)
             {
                 _stateImages[i].gameObject.SetActive(false);

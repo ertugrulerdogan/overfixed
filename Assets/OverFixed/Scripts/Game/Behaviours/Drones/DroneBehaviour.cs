@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using OverFixed.Scripts.Game.Behaviours.Bullets;
+using OverFixed.Scripts.Game.Behaviours.Explosion;
 using OverFixed.Scripts.Game.Behaviours.Hittables;
+using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Bullets;
 using OverFixed.Scripts.Game.Models.Drones;
@@ -20,16 +22,20 @@ namespace OverFixed.Scripts.Game.Behaviours.Drones
         private Drone _drone;
         private Pool _pool;
         private BulletBehaviour.Pool _bulletPool;
+        private ExplosionBehaviour.Pool _explosionPool;
+        private ScrapSpawner _scrapSpawner;
         private IList<PlatformBehaviour> _platformBehaviours;
         private Tween _movementTween;
         private Tween _fireTween;
 
         [Inject]
-        public void Initialize(Pool pool, BulletBehaviour.Pool bulletPool, IList<PlatformBehaviour> platformBehaviours)
+        public void Initialize(Pool pool, BulletBehaviour.Pool bulletPool, IList<PlatformBehaviour> platformBehaviours, ExplosionBehaviour.Pool explosionPool, ScrapSpawner scrapSpawner)
         {
             _pool = pool;
             _bulletPool = bulletPool;
             _platformBehaviours = platformBehaviours;
+            _explosionPool = explosionPool;
+            _scrapSpawner = scrapSpawner;
         }
         
         private void OnEnable()
@@ -44,16 +50,17 @@ namespace OverFixed.Scripts.Game.Behaviours.Drones
                     var platform = platforms[Random.Range(0, platforms.Count)];
                     var bullet = _bulletPool.Spawn();
                     bullet.Bind(new Bullet(_drone.Damage, true));
-                    bullet.transform.position = transform.position;
-                    bullet.transform.LookAt(platform.transform);
+                    bullet.Fire(transform.position, Quaternion.LookRotation(platform.transform.position - transform.position));
                 }
             });
         }
 
-        public void BeginMovement()
+        public void BeginMovement(Vector3 from, Vector3 to)
         {
             _movementTween?.Kill();
-            _movementTween = transform.DOMove(transform.forward, 5f).SetRelative(true);
+            transform.position = from;
+            transform.rotation = Quaternion.FromToRotation(from, to);
+            _movementTween = transform.DOMove(to, 5f);
         }
 
         private void OnDestroy()
@@ -67,6 +74,10 @@ namespace OverFixed.Scripts.Game.Behaviours.Drones
             if (_drone.Health < 0.0001f)
             {
                 Die?.Invoke();
+                var explosion = _explosionPool.Spawn();
+                explosion.transform.localScale = 0.2f * Vector3.one;
+                explosion.transform.position = transform.position;
+                _scrapSpawner.Scatter(transform.position, 4);
                 _pool.Despawn(this);
             }
         }

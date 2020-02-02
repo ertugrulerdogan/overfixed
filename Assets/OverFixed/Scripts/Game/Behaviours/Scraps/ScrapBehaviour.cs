@@ -8,6 +8,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
 {
     public class ScrapBehaviour : MonoBehaviour, IPickupable
     {
+        public static event Action OnPickUp;
+        
         public const float ScrapContribution = 2.5f;
         
         public Rigidbody Rigidbody { get; private set; }
@@ -26,6 +28,9 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
         public void Pickup()
         {
             _teamData.Scrap = Mathf.Min(_teamData.Scrap + ScrapContribution);
+            
+            OnPickUp?.Invoke();
+            
             Despawn();
         }
 

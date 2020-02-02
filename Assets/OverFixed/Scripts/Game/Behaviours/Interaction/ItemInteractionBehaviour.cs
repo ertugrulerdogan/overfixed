@@ -15,6 +15,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
     [RequireComponent(typeof(IInteractionInput))]
     public class ItemInteractionBehaviour : MonoBehaviour
     {
+        public static event Action OnItemPick;
+        public static event Action OnItemDrop;
+        public static event Action<Type> OnItemUseBegin;
+        public static event Action<Type> OnItemUseEnd;
+        
         [SerializeField] private Transform _itemContainer;
         [SerializeField] private Transform _wrenchContainer;
         
@@ -64,6 +69,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.transform.localPosition = Vector3.zero;
             _currentItemBehaviourBase.transform.localEulerAngles = Vector3.zero;
             
+            OnItemPick?.Invoke();
             _onPickUp?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
@@ -80,6 +86,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
                 behaviour.Visuals.localScale = Vector3.one;
             }
             
+            OnItemUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
             _onUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
@@ -93,7 +100,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
                 behaviour.SetVisualsAsChild();
             }
             
-            _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
+            OnItemUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
+           _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void Drop()
@@ -105,6 +113,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.transform.SetParent(null);            
             _currentItemBehaviourBase.Drop();
             
+            OnItemDrop?.Invoke();
             _onDrop.Invoke(_currentItemBehaviourBase.GetType());
             _currentItemBehaviourBase = null;
         }
@@ -128,7 +137,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private void InteractionInput_OnPick()
         {
-            if(_accessibleItemBehaviours.Count > 0)
+            if(_accessibleItemBehaviours.Count > 1 || (_accessibleItemBehaviours.Count > 0 && !_hasItem))
             {
                 if (_hasItem)
                 {
