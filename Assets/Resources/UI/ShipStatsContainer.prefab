@@ -689,7 +689,7 @@ MonoBehaviour:
   _stateImages:
   - {fileID: 1458667725604576534}
   - {fileID: 1458667725052894729}
-  - {fileID: 1458667725564702260}
+  - {fileID: 1458667725042758053}
   - {fileID: 1458667725042758053}
 --- !u!1 &1458667725042758049
 GameObject:
@@ -1325,7 +1325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1458667725564702257
 RectTransform:
   m_ObjectHideFlags: 0

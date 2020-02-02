@@ -31,8 +31,10 @@ namespace OverFixed.Scripts.Game.Views.Ships
             _healthSlider.value = _ship.Ship.CurrentHealth / _ship.Ship.Info.MaxHealth;
             for (int i = 0; i < _stateImages.Length; i++)
             {
-                _stateImages[i].gameObject.SetActive(i == (int) _ship.Ship.State);
+                _stateImages[i].gameObject.SetActive(false);
             }
+            
+            _stateImages[(int) _ship.Ship.State].gameObject.SetActive(true);
 
             float smokeFireFill;
             switch (_ship.Ship.State)
@@ -49,7 +51,7 @@ namespace OverFixed.Scripts.Game.Views.Ships
             }
 
             _smokeSlider.value = smokeFireFill;
-            _rectTransform.anchoredPosition = _camera.WorldToScreenPoint(_ship.transform.position);
+            _rectTransform.anchoredPosition = _camera.WorldToScreenPoint(_ship.transform.position  - _ship.transform.forward * 5f + Vector3.up * 2f);
         }
     }
 }
