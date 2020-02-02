@@ -170,6 +170,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
          
         private void LateUpdate()
         {
+            if (_isMoving)
+            {
+                return;
+            }
+
             switch (Ship.State)
             {
                 case ShipState.Damaged:
