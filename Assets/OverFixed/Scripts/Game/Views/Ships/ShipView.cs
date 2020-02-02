@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace OverFixed.Scripts.Game.Views.Ships
 {
@@ -12,6 +14,11 @@ namespace OverFixed.Scripts.Game.Views.Ships
         private Ship _ship;
 
         private UIManager _uiManager;
+
+        [SerializeField]
+        private List<ShipMeshData> _meshData;
+        [SerializeField]
+        private List<ShipTextureData> _textureData;
 
         [SerializeField]
         private List<ShipSectionView> _shipPartViews;
@@ -46,13 +53,31 @@ namespace OverFixed.Scripts.Game.Views.Ships
             }
         }
         
-        public void Bind(Ship ship) 
-        { 
-           _ship = ship;
-            // if (_bar != null)
-            // {
-            //     _bar.gameObject.SetActive(true);
-            // }
+        public void Bind(Ship ship)
+        {
+            _ship = ship;
+
+            SetShipMeshAndTexture(ship);
+        }
+
+        private void SetShipMeshAndTexture(Ship ship)
+        {
+            foreach (var data in _meshData)
+            {
+                data.Renderer.gameObject.SetActive(false);
+            }
+
+            var meshData = _meshData.FirstOrDefault(m => m.Type == ship.Info.ShipType);
+            if (meshData != null)
+            {
+                meshData.Renderer.gameObject.SetActive(true);
+
+                var material = _textureData.FirstOrDefault(t => t.Type == ship.Info.ShipType);
+                if (material != null)
+                {
+                    meshData.Renderer.material = material.Materials[Random.Range(0, material.Materials.Count)];
+                }
+            }
         }
 
         private void OnEnable()
@@ -105,4 +130,19 @@ namespace OverFixed.Scripts.Game.Views.Ships
             if (_statusBar) _statusBar.gameObject.SetActive(false);
         }
     }
+
+    [Serializable]
+    public class ShipMeshData
+    {
+        public ShipType Type;
+        public MeshRenderer Renderer;
+    }
+
+    [Serializable]
+    public class ShipTextureData
+    {
+        public ShipType Type;
+        public List<Material> Materials;
+    }
+
 }

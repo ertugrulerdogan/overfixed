@@ -598,6 +598,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee21505e239069e408b39adfc4374c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meshData:
+  - Type: 0
+    Renderer: {fileID: 5985367114876520796}
+  - Type: 1
+    Renderer: {fileID: 5985367114876520796}
+  - Type: 2
+    Renderer: {fileID: 5985367114876520796}
+  _textureData:
+  - Type: 0
+    Materials:
+    - {fileID: 2100000, guid: c24543c21d9de1942ba4358e5db2e4ff, type: 2}
+    - {fileID: 2100000, guid: c6b9708dbcd3d9e47adb9f845c9e191c, type: 2}
+    - {fileID: 2100000, guid: 393dfd73634f5c94e825f20109fd5573, type: 2}
+  - Type: 1
+    Materials:
+    - {fileID: 2100000, guid: c24543c21d9de1942ba4358e5db2e4ff, type: 2}
+    - {fileID: 2100000, guid: c6b9708dbcd3d9e47adb9f845c9e191c, type: 2}
+    - {fileID: 2100000, guid: 393dfd73634f5c94e825f20109fd5573, type: 2}
+  - Type: 2
+    Materials:
+    - {fileID: 2100000, guid: c24543c21d9de1942ba4358e5db2e4ff, type: 2}
+    - {fileID: 2100000, guid: c6b9708dbcd3d9e47adb9f845c9e191c, type: 2}
+    - {fileID: 2100000, guid: 393dfd73634f5c94e825f20109fd5573, type: 2}
   _shipPartViews:
   - {fileID: 7038548324293165125}
   - {fileID: 7364627826736980242}
