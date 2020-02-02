@@ -55,10 +55,12 @@ namespace OverFixed.Scripts.Game.Behaviours.Drones
             });
         }
 
-        public void BeginMovement()
+        public void BeginMovement(Vector3 from, Vector3 to)
         {
             _movementTween?.Kill();
-            _movementTween = transform.DOMove(transform.forward, 5f).SetRelative(true);
+            transform.position = from;
+            transform.rotation = Quaternion.FromToRotation(from, to);
+            _movementTween = transform.DOMove(to, 5f);
         }
 
         private void OnDestroy()

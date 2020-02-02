@@ -9,8 +9,8 @@ namespace OverFixed.Scripts.Game.Controllers
     {
         private const float DroneFrequency = 20f;
 
-        [SerializeField] private Transform _followPoint;
-        [SerializeField] private float _spawnRadius;
+        [SerializeField] private Transform[] _linesA;
+        [SerializeField] private Transform[] _linesB;
         private DroneBehaviour.Pool _pool;
         private Tween _tween;
         
@@ -20,12 +20,19 @@ namespace OverFixed.Scripts.Game.Controllers
             _pool = pool;
             _tween = DOVirtual.DelayedCall(DroneFrequency, () =>
             {
+                Transform[] points;
+                if (Random.value > 0.5f)
+                {
+                    points = _linesA;
+                }
+                else
+                {
+                    points = _linesB;
+                }
+
+                var point = Vector3.Lerp(points[0].position, points[1].position, Random.value);
                 var drone = _pool.Spawn();
-                var angle = Random.Range(-Mathf.PI, Mathf.PI);
-                drone.transform.position = _followPoint.position +
-                                           new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * _spawnRadius;
-                drone.transform.LookAt(_followPoint);
-                drone.BeginMovement();
+                drone.BeginMovement(point + Vector3.forward * 10f, point);
             }).SetLoops(-1);
         }
 
