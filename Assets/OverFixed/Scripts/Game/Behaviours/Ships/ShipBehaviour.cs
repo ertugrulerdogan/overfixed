@@ -202,11 +202,16 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             {
                 Destruct();
                 
-                var explosion =_explosionPool.Spawn();
-                explosion.transform.position = transform.position;
+                SpawnExplosion();
 
                 _resultAction?.Invoke(-Ship.Info.WarPointNegative);
             }
+        }
+
+        private void SpawnExplosion()
+        {
+            var explosion = _explosionPool.Spawn();
+            explosion.transform.position = transform.position;
         }
 
         private void Hurt(float amount)
