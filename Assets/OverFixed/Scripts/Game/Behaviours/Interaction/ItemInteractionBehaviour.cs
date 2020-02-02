@@ -137,7 +137,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private void InteractionInput_OnPick()
         {
-            if(_accessibleItemBehaviours.Count > 0)
+            if(_accessibleItemBehaviours.Count > 1 || (_accessibleItemBehaviours.Count > 0 && !_hasItem))
             {
                 if (_hasItem)
                 {
