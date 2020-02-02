@@ -102,7 +102,7 @@ namespace OverFixed.Scripts.Game.Views.Ships
             // {
             //     _bar.gameObject.SetActive(false);
             // }
-            _statusBar.gameObject.SetActive(false);
+            if (_statusBar) _statusBar.gameObject.SetActive(false);
         }
     }
 }

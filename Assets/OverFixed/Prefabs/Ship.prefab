@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 3052310435668381774}
   - component: {fileID: 5285977512922478950}
   - component: {fileID: 7541298643990742212}
+  - component: {fileID: 7299499971959527958}
   m_Layer: 9
   m_Name: Ship
   m_TagString: Untagged
@@ -602,6 +603,22 @@ MonoBehaviour:
   - {fileID: 7364627826736980242}
   - {fileID: 2679053244489825331}
   AfterBurner: {fileID: 5484009964650116565}
+--- !u!54 &7299499971959527958
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076948564719973635}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1001 &2257835477886906722
 PrefabInstance:
   m_ObjectHideFlags: 0
