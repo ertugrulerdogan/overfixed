@@ -15,6 +15,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
     [RequireComponent(typeof(IInteractionInput))]
     public class ItemInteractionBehaviour : MonoBehaviour
     {
+        public static event Action OnItemPick;
+        public static event Action OnItemDrop;
         public static event Action<Type> OnItemUseBegin;
         public static event Action<Type> OnItemUseEnd;
         
@@ -67,6 +69,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.transform.localPosition = Vector3.zero;
             _currentItemBehaviourBase.transform.localEulerAngles = Vector3.zero;
             
+            OnItemPick?.Invoke();
             _onPickUp?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
@@ -110,6 +113,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.transform.SetParent(null);            
             _currentItemBehaviourBase.Drop();
             
+            OnItemDrop?.Invoke();
             _onDrop.Invoke(_currentItemBehaviourBase.GetType());
             _currentItemBehaviourBase = null;
         }

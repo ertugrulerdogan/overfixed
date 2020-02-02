@@ -5,6 +5,7 @@ using OverFixed.Scripts.Game.Behaviours.Interaction;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Helpers.AudioSystem.Scripts;
+using OverFixed.Scripts.Helpers.CoroutineSystem;
 using UnityEngine;
 
 namespace OverFixed.Scripts.Game.Controllers
@@ -38,6 +39,8 @@ namespace OverFixed.Scripts.Game.Controllers
         private void Start()
         {
             ScrapBehaviour.OnPickUp += ScrapBehaviour_OnPickUp;
+            ItemInteractionBehaviour.OnItemPick += ItemInteractionBehaviour_OnItemPick;
+            ItemInteractionBehaviour.OnItemDrop += ItemInteractionBehaviour_OnItemDrop;
             ItemInteractionBehaviour.OnItemUseBegin += ItemInteractionBehaviour_OnItemUseBegin;
             ItemInteractionBehaviour.OnItemUseEnd += ItemInteractionBehaviour_OnItemUseEnd;
         }
@@ -59,27 +62,60 @@ namespace OverFixed.Scripts.Game.Controllers
         }
         
         #region Event Listeners
-        
+
+        private bool _canPlayScrapCollectedSound = true;
         private void ScrapBehaviour_OnPickUp()
         {
-            PlaySoundEffect(SoundEffectType.ScrapCollected);
+            if (_canPlayScrapCollectedSound)
+            {
+                PlaySoundEffect(SoundEffectType.ScrapCollected);
+
+                _canPlayScrapCollectedSound = false;
+                CoroutineManager.DoAfterGivenTime(0.2f, () =>
+                {
+                    _canPlayScrapCollectedSound = true; 
+                    
+                });
+            }
         }
 
-        private AudioSource _extinguisherEffect;
+        private AudioSource _itemUseEffect;
         private void ItemInteractionBehaviour_OnItemUseBegin(Type obj)
         {
             if (obj == typeof(ExtinguisherBehaviour))
             {
-                _extinguisherEffect = PlaySoundEffect(SoundEffectType.FireExtinguish, false).SetLoop(true);
+                _itemUseEffect = PlaySoundEffect(SoundEffectType.FireExtinguish, false).SetLoop(true);
+            }
+            if (obj == typeof(WrenchBehaviour))
+            {
+                _itemUseEffect = PlaySoundEffect(SoundEffectType.WrenchUse, false).SetLoop(true);
+            }
+            if (obj == typeof(CutterBehaviour))
+            {
+                _itemUseEffect = PlaySoundEffect(SoundEffectType.CutterUse, false).SetLoop(true);
+            }
+            if (obj == typeof(RifleBehaviour))
+            {
+                _itemUseEffect = PlaySoundEffect(SoundEffectType.RifleUse, false).SetLoop(true);
             }
         }
         
         private void ItemInteractionBehaviour_OnItemUseEnd(Type obj)
         {            
-            if (obj == typeof(ExtinguisherBehaviour))
+            if (obj == typeof(ExtinguisherBehaviour) || obj == typeof(WrenchBehaviour) || obj == typeof(CutterBehaviour) || obj == typeof(RifleBehaviour))
             {
-                _audioManager.StopSoundEffect(_extinguisherEffect);
+                _audioManager.StopSoundEffect(_itemUseEffect);
             }     
+        }
+        
+        private void ItemInteractionBehaviour_OnItemPick()
+        {
+            PlaySoundEffect(SoundEffectType.ToolTake);
+        }
+
+        private void ItemInteractionBehaviour_OnItemDrop()
+        {
+            PlaySoundEffect(SoundEffectType.ToolTake);
         }
         
         #endregion
@@ -103,6 +139,9 @@ namespace OverFixed.Scripts.Game.Controllers
         ScrapCollected = 11,
         CharacterFootStep = 12,
         Gun = 13,
+        WrenchUse = 14,
+        CutterUse = 15,
+        RifleUse = 16
     }
 
     public enum PlaylistType
