@@ -29,8 +29,9 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
             _scatterParticlePool = scatterPool;
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _initialVisualPosition = Visuals.localPosition;
             _initialVisualRotation = Visuals.localEulerAngles;
         }

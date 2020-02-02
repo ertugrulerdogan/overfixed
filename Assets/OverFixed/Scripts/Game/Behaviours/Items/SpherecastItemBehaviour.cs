@@ -10,7 +10,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
         [SerializeField] private float _range;
         private LayerMask _shipMask;
 
-        private void Start()
+        protected virtual void Start()
         {
             _shipMask = LayerMask.GetMask("Ship");
         }
