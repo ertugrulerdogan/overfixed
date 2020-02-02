@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Character.Input;
@@ -9,12 +10,17 @@ using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Interaction
 {
+    [Serializable] public class ItemEvent : UnityEvent<Type>{}
+    
     [RequireComponent(typeof(IInteractionInput))]
     public class ItemInteractionBehaviour : MonoBehaviour
     {
         [SerializeField] private Transform _itemContainer;
-        [SerializeField] private UnityEvent _onPickUp;
-        [SerializeField] private UnityEvent _onUsing;
+        
+        [SerializeField] private ItemEvent _onPickUp;
+        [SerializeField] private ItemEvent _onDrop;
+        [SerializeField] private ItemEvent _onUseBegin;
+        [SerializeField] private ItemEvent _onUseEnd;
             
         private IInteractionInput _interactionInput;
         private IInteractionInput InteractionInput
@@ -68,11 +74,15 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private void BeginUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = true;
+            
+            _onUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void EndUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = false;
+         
+            _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void Drop()
@@ -82,6 +92,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.BoundItem.Using = false;
             
             _currentItemBehaviourBase.transform.SetParent(null);
+            
+            _onDrop.Invoke(_currentItemBehaviourBase.GetType());
             _currentItemBehaviourBase = null;
         }
 
@@ -111,6 +123,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             else if(_accessibleItemBehaviours.Count > 0)
             {
                 Pick(GetClosestItem());
+                _onPickUp?.Invoke(_currentItemBehaviourBase.GetType());
             }
         }
         
