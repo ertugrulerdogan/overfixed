@@ -29,14 +29,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private bool _hasItem;
         private bool _shouldPickItem;
         private ItemBehaviourBase _currentItemBehaviourBase;
-        private IList<ItemBehaviourBase> _interactableItemBehaviours;
         private IList<ItemBehaviourBase> _accessibleItemBehaviours;
-
-        [Inject]
-        public void Initialize(ItemBehaviourBase[] items)
-        {
-            _interactableItemBehaviours = items;
-        }
         
         private void Awake()
         {
@@ -82,6 +75,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.BoundItem.Using = false;
             
             _currentItemBehaviourBase.transform.SetParent(null);
+            _currentItemBehaviourBase.Drop();
             _currentItemBehaviourBase = null;
         }
 
@@ -104,12 +98,13 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private void InteractionInput_OnPick()
         {
-            if (_hasItem)
+            if(_accessibleItemBehaviours.Count > 0)
             {
-                Drop();
-            }
-            else if(_accessibleItemBehaviours.Count > 0)
-            {
+                if (_hasItem)
+                {
+                    Drop();
+                }
+                
                 Pick(GetClosestItem());
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
+using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Items
 {
@@ -9,6 +10,14 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
         public TItem Item { get; private set; }
         public override Item BoundItem => Item;
         public Transform Transform => transform;
+
+        private Pool _pool;
+
+        [Inject]
+        public void Initialize(Pool pool)
+        {
+            _pool = pool;
+        }
 
         public void Bind(TItem item)
         {
@@ -23,6 +32,20 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
             }
         }
 
+        public override void Drop()
+        {
+            _pool.Despawn(this);
+        }
+
         protected abstract void UseTick();
+
+        public class Pool : MonoMemoryPool<ItemBehaviour<TItem>>
+        {
+            protected override void OnCreated(ItemBehaviour<TItem> item)
+            {
+                base.OnCreated(item);
+                item.Bind(Activator.CreateInstance<TItem>());
+            }
+        }
     }
 }
