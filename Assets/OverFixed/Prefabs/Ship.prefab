@@ -118,7 +118,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.5518868, g: 0.8980844, b: 1, a: 1}
-  m_Intensity: 15
+  m_Intensity: 100
   m_Range: 10
   m_SpotAngle: 155.34993
   m_InnerSpotAngle: 21.80208
@@ -225,7 +225,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 096c0eb74710d5a419f6f6d05ea8340e, type: 2}
+  - {fileID: 2100000, guid: c24543c21d9de1942ba4358e5db2e4ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -397,7 +397,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.5518868, g: 0.8980844, b: 1, a: 1}
-  m_Intensity: 15
+  m_Intensity: 100
   m_Range: 10
   m_SpotAngle: 155.34993
   m_InnerSpotAngle: 21.80208
