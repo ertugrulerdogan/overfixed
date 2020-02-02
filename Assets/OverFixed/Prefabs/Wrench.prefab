@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 3
+  _visuals: {fileID: 3495725279140570144}
 --- !u!65 &-2726972118845068339
 BoxCollider:
   m_ObjectHideFlags: 0

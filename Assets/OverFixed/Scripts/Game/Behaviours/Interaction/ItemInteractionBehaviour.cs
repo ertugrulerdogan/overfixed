@@ -16,6 +16,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
     public class ItemInteractionBehaviour : MonoBehaviour
     {
         [SerializeField] private Transform _itemContainer;
+        [SerializeField] private Transform _wrenchContainer;
         
         [SerializeField] private ItemEvent _onPickUp;
         [SerializeField] private ItemEvent _onDrop;
@@ -69,6 +70,15 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private void BeginUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = true;
+
+            if (_currentItemBehaviourBase.GetType() == typeof(WrenchBehaviour))
+            {
+                WrenchBehaviour behaviour = ((WrenchBehaviour) _currentItemBehaviourBase);
+                behaviour.Visuals.SetParent(_wrenchContainer);
+                behaviour.Visuals.localPosition = Vector3.zero;
+                behaviour.Visuals.localEulerAngles = Vector3.zero;
+                behaviour.Visuals.localScale = Vector3.one;
+            }
             
             _onUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
         }
@@ -76,6 +86,12 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private void EndUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = false;
+                        
+            if (_currentItemBehaviourBase.GetType() == typeof(WrenchBehaviour))
+            {
+                WrenchBehaviour behaviour = ((WrenchBehaviour) _currentItemBehaviourBase);
+                behaviour.SetVisualsAsChild();
+            }
             
             _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
         }

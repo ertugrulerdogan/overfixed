@@ -328,6 +328,7 @@ Transform:
   - {fileID: 2552998959198894002}
   - {fileID: 8215288302417889216}
   - {fileID: 2692341965683238718}
+  - {fileID: 6051116201698353535}
   m_Father: {fileID: 7868987175377122145}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -919,6 +920,36 @@ Transform:
   m_Father: {fileID: 9118330732875985081}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2978589753974717040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6051116201698353535}
+  m_Layer: 0
+  m_Name: WrenchContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6051116201698353535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978589753974717040}
+  m_LocalRotation: {x: 0.093954846, y: 0.11275491, z: -0.5836949, w: -0.7985983}
+  m_LocalPosition: {x: 0.1802, y: 0.095, z: 0.1179}
+  m_LocalScale: {x: 0.7499997, y: 0.74999976, z: 0.7499999}
+  m_Children: []
+  m_Father: {fileID: 6395744645445158141}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: -1.056, y: -16.847, z: 72.483}
 --- !u!1 &2985291841955690976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,6 +1732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemContainer: {fileID: 7614701963388351756}
+  _wrenchContainer: {fileID: 6051116201698353535}
   _onPickUp:
     m_PersistentCalls:
       m_Calls:
