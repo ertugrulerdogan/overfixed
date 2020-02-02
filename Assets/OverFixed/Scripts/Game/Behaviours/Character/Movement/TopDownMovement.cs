@@ -60,10 +60,18 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             
             Velocity = transform.position - _lastPosition;
             _lastPosition = transform.position;
+
+
+            if (Mathf.Abs(DirectionalInput.Horizontal) > 0.5f || Mathf.Abs(DirectionalInput.Vertical) > 0.5f)
+            {
+                Vector3 forward = new Vector3(DirectionalInput.Horizontal, 0f, DirectionalInput.Vertical);
+                transform.forward = Vector3.Lerp(transform.forward, forward.normalized, Time.fixedDeltaTime * 25f);
+
+            }
             
             if (Velocity.magnitude > 0.1f)
             {
-                transform.forward = Vector3.Lerp(transform.forward, Velocity.normalized, Time.fixedDeltaTime * 20f);
+//                transform.forward = Vector3.Lerp(transform.forward, Velocity.normalized, Time.fixedDeltaTime * 20f);
             }
         }
 
