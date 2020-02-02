@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -238,6 +238,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 98a4c53aaa36244429fd410c2b1f3961, type: 2}
+    - target: {fileID: -3784039625235114267, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3253937412811087339, guid: bb563d862f35cd6478d03b189968fc2e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -303,6 +308,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 441010858da899442868cac414efed46, type: 2}
+    - target: {fileID: 206679057277783725, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 798963231395399099, guid: bb563d862f35cd6478d03b189968fc2e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -313,6 +323,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 98a4c53aaa36244429fd410c2b1f3961, type: 2}
+    - target: {fileID: 1066068651159070303, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066068651159070303, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.22
+      objectReference: {fileID: 0}
     - target: {fileID: 1318460613128657674, guid: bb563d862f35cd6478d03b189968fc2e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -388,6 +408,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 441010858da899442868cac414efed46, type: 2}
+    - target: {fileID: 7635774602935577135, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635774602935577135, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 7683807229403119136, guid: bb563d862f35cd6478d03b189968fc2e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.91
+      objectReference: {fileID: 0}
     - target: {fileID: 8662461212079705727, guid: bb563d862f35cd6478d03b189968fc2e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -651,11 +686,11 @@ MonoBehaviour:
     WarPointPositive: 50
     WarPointNegative: 70
   - ShipType: 2
-    MaxHealth: 1000
-    CurrentHealthMin: 500
-    CurrentHealthMax: 750
+    MaxHealth: 600
+    CurrentHealthMin: 250
+    CurrentHealthMax: 500
     SmokeDuration: 8
-    BurnDamage: 12
+    BurnDamage: 16
     GrindAmount: 2400
     GrindHitAmount: 12
     ExtinguisherDuration: 5
@@ -664,11 +699,11 @@ MonoBehaviour:
     WarPointPositive: 100
     WarPointNegative: 120
   - ShipType: 2
-    MaxHealth: 1000
-    CurrentHealthMin: 250
-    CurrentHealthMax: 500
+    MaxHealth: 600
+    CurrentHealthMin: 200
+    CurrentHealthMax: 400
     SmokeDuration: 8
-    BurnDamage: 12
+    BurnDamage: 16
     GrindAmount: 2400
     GrindHitAmount: 12
     ExtinguisherDuration: 5
@@ -677,11 +712,11 @@ MonoBehaviour:
     WarPointPositive: 100
     WarPointNegative: 120
   - ShipType: 2
-    MaxHealth: 1000
-    CurrentHealthMin: 100
-    CurrentHealthMax: 200
+    MaxHealth: 600
+    CurrentHealthMin: 150
+    CurrentHealthMax: 250
     SmokeDuration: 8
-    BurnDamage: 12
+    BurnDamage: 16
     GrindAmount: 2400
     GrindHitAmount: 12
     ExtinguisherDuration: 5
@@ -870,7 +905,7 @@ PrefabInstance:
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.44
+      value: -12.07
       objectReference: {fileID: 0}
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
@@ -880,7 +915,7 @@ PrefabInstance:
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.55
+      value: 9.530001
       objectReference: {fileID: 0}
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
@@ -978,7 +1013,7 @@ PrefabInstance:
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.2
+      value: 13.890653
       objectReference: {fileID: 0}
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
@@ -1256,7 +1291,7 @@ PrefabInstance:
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.8
+      value: 11.17
       objectReference: {fileID: 0}
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
@@ -1266,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11
+      value: 10.22
       objectReference: {fileID: 0}
     - target: {fileID: 6597962335925834612, guid: 7798c3a1f63e9d841a662b4459c4d7a4,
         type: 3}

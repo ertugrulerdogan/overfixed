@@ -145,7 +145,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
                 Hurt(amount);
             }
 
-            return initialAmount - Ship.CurrentHealth;
+            return (initialAmount - Ship.CurrentHealth) * 5f;
         }
 
         public void Extinguish(Ship.Section section, float amount)
