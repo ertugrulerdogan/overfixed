@@ -63,7 +63,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             
             if (Velocity.magnitude > 0.1f)
             {
-                transform.forward = Velocity.normalized;
+                transform.forward = Vector3.Lerp(transform.forward, Velocity.normalized, Time.fixedDeltaTime * 20f);
             }
         }
 
