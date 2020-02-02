@@ -9,6 +9,11 @@ namespace OverFixed.Scripts.Game.Views.Ships
         [SerializeField]
         private Image _healthFill;
         [SerializeField]
+        private Image _fireExtinguishFill;
+        [SerializeField]
+        private Image _smokeRepairFill;
+
+        [SerializeField]
         private Text _healthText;
 
         private ShipView _shipView;
@@ -32,6 +37,18 @@ namespace OverFixed.Scripts.Game.Views.Ships
             SetScreenPosition();
         }
 
+        public void UpdateSmokeRepair(float amount)
+        {
+            _smokeRepairFill.transform.parent.gameObject.SetActive(true);
+            _smokeRepairFill.fillAmount = amount;
+        }
+
+        public void UpdateFireExtinguish(float amount)
+        {
+            _fireExtinguishFill.transform.parent.gameObject.SetActive(true);
+            _fireExtinguishFill.fillAmount = amount;
+        }
+
         public void UpdateHealth(float current, float max)
         {
             _healthFill.fillAmount = current / max;
@@ -49,6 +66,12 @@ namespace OverFixed.Scripts.Game.Views.Ships
             {
                 _rect.anchoredPosition = _camera.WorldToScreenPoint(_shipView.transform.position);
             }
+        }
+
+        public void HideFireAndSmoke()
+        {
+            _smokeRepairFill.transform.parent.gameObject.SetActive(false);
+            _fireExtinguishFill.transform.parent.gameObject.SetActive(false);
         }
     }
 }

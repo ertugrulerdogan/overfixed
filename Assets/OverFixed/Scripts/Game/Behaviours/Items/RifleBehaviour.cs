@@ -1,4 +1,5 @@
 using OverFixed.Scripts.Game.Behaviours.Bullets;
+using OverFixed.Scripts.Game.Models.Bullets;
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
 using Zenject;
@@ -24,7 +25,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
                 _lastFireTime = time;
                 Item.Ammo--;
                 var bullet = _bulletPool.Spawn();
-                bullet.Damage = Item.Damage;
+                bullet.Bind(new Bullet(Item.Damage));
                 bullet.transform.position = transform.position;
                 bullet.transform.rotation = transform.rotation;
             }
