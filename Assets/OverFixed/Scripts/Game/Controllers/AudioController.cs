@@ -4,6 +4,7 @@ using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Interaction;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
+using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Helpers.AudioSystem.Scripts;
 using OverFixed.Scripts.Helpers.CoroutineSystem;
 using UnityEngine;
@@ -43,6 +44,15 @@ namespace OverFixed.Scripts.Game.Controllers
             ItemInteractionBehaviour.OnItemDrop += ItemInteractionBehaviour_OnItemDrop;
             ItemInteractionBehaviour.OnItemUseBegin += ItemInteractionBehaviour_OnItemUseBegin;
             ItemInteractionBehaviour.OnItemUseEnd += ItemInteractionBehaviour_OnItemUseEnd;
+            
+            ShipBehaviour.OnBurn += ShipBehaviour_OnBurn;
+            ShipBehaviour.OnExploded += ShipBehaviour_OnExploded;
+            ShipBehaviour.OnLand += ShipBehaviour_OnLand;
+            ShipBehaviour.OnSmoke += ShipBehaviour_OnSmoke;
+            ShipBehaviour.OnTakeOff += ShipBehaviour_OnTakeOff;
+            ShipBehaviour.OnDespawned += ShipBehaviour_OnDespawned;
+
+            PlaySoundEffect(SoundEffectType.Background, false).SetLoop(true);
         }
 
         private void OnDestroy()
@@ -107,6 +117,8 @@ namespace OverFixed.Scripts.Game.Controllers
                 _audioManager.StopSoundEffect(_itemUseEffect);
             }     
         }
+
+        private Dictionary<ShipBehaviour, AudioSource> _shipSounds = new Dictionary<ShipBehaviour, AudioSource>();
         
         private void ItemInteractionBehaviour_OnItemPick()
         {
@@ -116,6 +128,46 @@ namespace OverFixed.Scripts.Game.Controllers
         private void ItemInteractionBehaviour_OnItemDrop()
         {
             PlaySoundEffect(SoundEffectType.ToolTake);
+        }
+        
+        private void ShipBehaviour_OnTakeOff(ShipBehaviour obj)
+        {
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
+            
+            PlaySoundEffect(SoundEffectType.ShipFlying);
+        }
+
+        private void ShipBehaviour_OnSmoke(ShipBehaviour obj)
+        {
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
+
+            PlaySoundEffect(SoundEffectType.ShipFlying, false).SetLoop(true);
+        }
+
+        private void ShipBehaviour_OnLand(ShipBehaviour obj)
+        {
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
+
+            PlaySoundEffect(SoundEffectType.ShipLanding);
+        }
+
+        private void ShipBehaviour_OnExploded(ShipBehaviour obj)
+        {
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
+
+            PlaySoundEffect(SoundEffectType.ShipExplode);
+        }
+
+        private void ShipBehaviour_OnBurn(ShipBehaviour obj)
+        {
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
+
+//            PlaySoundEffect(SoundEffectType.ShipBurn, false).SetLoop(true);
+        }
+
+        private void ShipBehaviour_OnDespawned(ShipBehaviour obj)
+        {            
+            if (_shipSounds.ContainsKey(obj)) _audioManager.StopSoundEffect(_shipSounds[obj]);
         }
         
         #endregion
@@ -141,7 +193,8 @@ namespace OverFixed.Scripts.Game.Controllers
         Gun = 13,
         WrenchUse = 14,
         CutterUse = 15,
-        RifleUse = 16
+        RifleUse = 16,
+        Background = 17
     }
 
     public enum PlaylistType

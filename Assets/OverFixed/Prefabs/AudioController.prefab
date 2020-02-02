@@ -47,31 +47,12 @@ MonoBehaviour:
   - Type: 11
     SoundEffect:
       AudioSource: {fileID: 0}
-      _originalVolume: 0.5
+      _originalVolume: 0.25
       _playRandom: 0
       _useAudioMixerGroup: 0
       _audioMixerGroup: {fileID: 0}
       _audioClipList:
       - {fileID: 8300000, guid: b41109ae627851a46b65d48adefff1ce, type: 3}
-  - Type: 9
-    SoundEffect:
-      AudioSource: {fileID: 0}
-      _originalVolume: 0.5
-      _playRandom: 0
-      _useAudioMixerGroup: 0
-      _audioMixerGroup: {fileID: 0}
-      _audioClipList:
-      - {fileID: 8300000, guid: 959ed3755da625e45a5fb988a004539d, type: 3}
-  - Type: 14
-    SoundEffect:
-      AudioSource: {fileID: 0}
-      _originalVolume: 0.5
-      _playRandom: 1
-      _useAudioMixerGroup: 0
-      _audioMixerGroup: {fileID: 0}
-      _audioClipList:
-      - {fileID: 8300000, guid: fd7bd1667bbb8d1499fe8a2dad9af267, type: 3}
-      - {fileID: 8300000, guid: 30d8d1c3f27443b4aa11d82efa5c537e, type: 3}
   - Type: 10
     SoundEffect:
       AudioSource: {fileID: 0}
@@ -81,6 +62,24 @@ MonoBehaviour:
       _audioMixerGroup: {fileID: 0}
       _audioClipList:
       - {fileID: 8300000, guid: aaffaa965de2e4548a86a068a1ee804c, type: 3}
+  - Type: 14
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: fd7bd1667bbb8d1499fe8a2dad9af267, type: 3}
+  - Type: 9
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 959ed3755da625e45a5fb988a004539d, type: 3}
   - Type: 15
     SoundEffect:
       AudioSource: {fileID: 0}
@@ -89,7 +88,7 @@ MonoBehaviour:
       _useAudioMixerGroup: 0
       _audioMixerGroup: {fileID: 0}
       _audioClipList:
-      - {fileID: 8300000, guid: 1563def56d97bdb4bbfd04924eb42aea, type: 3}
+      - {fileID: 0}
   - Type: 16
     SoundEffect:
       AudioSource: {fileID: 0}
@@ -99,4 +98,49 @@ MonoBehaviour:
       _audioMixerGroup: {fileID: 0}
       _audioClipList:
       - {fileID: 8300000, guid: e17cba16208721f44b1628c835c986da, type: 3}
+  - Type: 1
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 2ab7e5d68497f974a9dae07c0d6d0ef3, type: 3}
+  - Type: 3
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 5e78f972aef637641b96a049b5f4245d, type: 3}
+  - Type: 7
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 50560604cb919c84e9424cf2bb58edfa, type: 3}
+  - Type: 8
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 57ea4fdd74029b34ebf954d1ecf37d71, type: 3}
+  - Type: 2
+    SoundEffect:
+      AudioSource: {fileID: 0}
+      _originalVolume: 0.5
+      _playRandom: 0
+      _useAudioMixerGroup: 0
+      _audioMixerGroup: {fileID: 0}
+      _audioClipList:
+      - {fileID: 8300000, guid: 2ab7e5d68497f974a9dae07c0d6d0ef3, type: 3}
   _playlists: []

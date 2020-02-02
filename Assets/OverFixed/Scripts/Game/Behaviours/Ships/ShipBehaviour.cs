@@ -12,6 +12,13 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 {
     public class ShipBehaviour : MonoBehaviour, IHittable
     {
+        public static event Action<ShipBehaviour> OnBurn;
+        public static event Action<ShipBehaviour> OnSmoke;
+        public static event Action<ShipBehaviour> OnExploded;
+        public static event Action<ShipBehaviour> OnTakeOff;
+        public static event Action<ShipBehaviour> OnLand;
+        public static event Action<ShipBehaviour> OnDespawned;
+        
         public Ship Ship;
         private Pool _pool;
         private ExplosionBehaviour.Pool _explosionPool;
@@ -67,6 +74,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             seq.Join(DOTween.To(() => AfterburnerAmount, x => AfterburnerAmount = x, 0, 2));
             seq.OnComplete(() => { _isMoving = false; });
             _isMoving = true;
+            
+            OnLand?.Invoke(this);            
         }
 
         private void TakeOff(Action onComplete)
@@ -87,6 +96,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
                 Ship.Platform.IsPlatformOccupied = false;
                 _isMoving = false;
                 _resultAction?.Invoke(Ship.Info.WarPointPositive);
+                OnTakeOff?.Invoke(this);
                 onComplete?.Invoke();
             });
 
@@ -273,17 +283,24 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         private void StartFire(Models.Ships.Ship.Section section)
         {
             section.FireAmount = 1f; // change later
+            
+            OnBurn?.Invoke(this);
         }
 
         private void StartSmoke(Models.Ships.Ship.Section section)
         {
            section.SmokeAmount = 0.1f; //change later
+            
+            OnSmoke?.Invoke(this);
         }
 
         private void Destruct()
         {
             Ship.Platform.IsPlatformOccupied = false;
             _isMoving = false;
+            
+            OnExploded?.Invoke(this);
+            
             _pool.Despawn(this);
         }
 
@@ -294,7 +311,13 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
 
         public class Pool : MonoMemoryPool<ShipBehaviour>
         {
-
+            protected override void OnDespawned(ShipBehaviour item)
+            {
+                base.OnDespawned(item);
+                
+                ShipBehaviour.OnDespawned?.Invoke(item);
+            }
         }
     }
 }
+
