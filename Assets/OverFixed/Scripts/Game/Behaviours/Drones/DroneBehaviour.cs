@@ -44,8 +44,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Drones
                     var platform = platforms[Random.Range(0, platforms.Count)];
                     var bullet = _bulletPool.Spawn();
                     bullet.Bind(new Bullet(_drone.Damage, true));
-                    bullet.transform.position = transform.position;
-                    bullet.transform.LookAt(platform.transform);
+                    bullet.Fire(transform.position, Quaternion.LookRotation(platform.transform.position - transform.position));
                 }
             });
         }

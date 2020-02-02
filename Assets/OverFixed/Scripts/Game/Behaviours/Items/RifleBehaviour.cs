@@ -26,8 +26,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
                 Item.Ammo--;
                 var bullet = _bulletPool.Spawn();
                 bullet.Bind(new Bullet(Item.Damage));
-                bullet.transform.position = transform.position;
-                bullet.transform.rotation = transform.rotation;
+                bullet.Fire(transform.position + transform.forward, transform.rotation);
             }
         }
     }

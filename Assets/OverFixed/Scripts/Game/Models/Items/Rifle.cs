@@ -8,8 +8,8 @@ namespace OverFixed.Scripts.Game.Models.Items
 
         public Rifle()
         {
-            FirePeriod = 0.25f;
-            Damage = 0.5f;
+            FirePeriod = 0.1f;
+            Damage = 0.2f;
         }
     }
 }

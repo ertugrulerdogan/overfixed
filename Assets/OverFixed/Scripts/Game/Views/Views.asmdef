@@ -2,7 +2,8 @@
     "name": "Views",
     "references": [
         "Models",
-        "Behaviours"
+        "Behaviours",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -18,15 +18,15 @@ namespace OverFixed.Scripts.Game.Controllers
         public void Initialize(DroneBehaviour.Pool pool)
         {
             _pool = pool;
-            // _tween = DOVirtual.DelayedCall(DroneFrequency, () =>
-            // {
-            //     var drone = _pool.Spawn();
-            //     var angle = Random.Range(-Mathf.PI, Mathf.PI);
-            //     drone.transform.position = _followPoint.position +
-            //                                new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * _spawnRadius;
-            //     drone.transform.LookAt(_followPoint);
-            //     drone.BeginMovement();
-            // }).SetLoops(-1);
+            _tween = DOVirtual.DelayedCall(DroneFrequency, () =>
+            {
+                var drone = _pool.Spawn();
+                var angle = Random.Range(-Mathf.PI, Mathf.PI);
+                drone.transform.position = _followPoint.position +
+                                           new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * _spawnRadius;
+                drone.transform.LookAt(_followPoint);
+                drone.BeginMovement();
+            }).SetLoops(-1);
         }
 
         private void OnDestroy()

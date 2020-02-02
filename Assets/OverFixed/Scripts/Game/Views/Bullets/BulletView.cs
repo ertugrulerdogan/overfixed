@@ -1,24 +1,34 @@
 using System;
 using OverFixed.Scripts.Game.Behaviours.Bullets;
 using UnityEngine;
+using Zenject;
 
 namespace OverFixed.Scripts.Game.Views.Bullets
 {
     public class BulletView : MonoBehaviour
     {
-        public void Start()
+        [SerializeField] private TrailRenderer _trailRenderer;
+        private PlaceholderFactory<ParticleSystem> _scatterFactory;
+        
+        [Inject]
+        public void Initialize(PlaceholderFactory<ParticleSystem> scatterFactory)
         {
-            GetComponent<BulletBehaviour>().OnHit += OnHit;
+            _scatterFactory = scatterFactory;
+            var bullet = GetComponent<BulletBehaviour>();
+            bullet.OnHit += OnHit;
+            bullet.OnFire += OnFire;
         }
 
-        private void OnEnable()
+        private void OnFire()
         {
-            
+            _trailRenderer.Clear();
         }
 
         private void OnHit(Vector3 position, Vector3 direction)
         {
-            throw new NotImplementedException();
+            var scatter = _scatterFactory.Create();
+            scatter.transform.position = position;
+            scatter.transform.LookAt(transform.position - direction);
         }
     }
 }
