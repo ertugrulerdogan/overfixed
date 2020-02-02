@@ -33,14 +33,6 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Animation
                 return _movement;
             }
         }
-
-        private IList<ItemBehaviourBase> _interactableItemBehaviours;
-
-        [Inject]
-        private void Initialize(ItemBehaviourBase[] items)
-        {
-            _interactableItemBehaviours = items;
-        }
         
         private void Update()
         {
@@ -49,15 +41,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Animation
 
         private int GetItemIndex(Type itemType)
         {
-            for (int i = 0; i < _interactableItemBehaviours.Count; i++)
-            {
-                if (itemType == _interactableItemBehaviours[i].GetType())
-                {
-                    return i;
-                }
-            }
-
-            return -1;
+            if (itemType == typeof(WrenchBehaviour)) return 0;
+            else if (itemType == typeof(ExtinguisherBehaviour)) return 1;
+            else if (itemType == typeof(RifleBehaviour)) return 2;
+            else if (itemType == typeof(CutterBehaviour)) return 3;
+            else return -1;
         }
         
         #region Event Listeners
