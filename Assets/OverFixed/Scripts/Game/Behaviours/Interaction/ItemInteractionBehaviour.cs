@@ -15,6 +15,9 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
     [RequireComponent(typeof(IInteractionInput))]
     public class ItemInteractionBehaviour : MonoBehaviour
     {
+        public static event Action<Type> OnItemUseBegin;
+        public static event Action<Type> OnItemUseEnd;
+        
         [SerializeField] private Transform _itemContainer;
         [SerializeField] private Transform _wrenchContainer;
         
@@ -80,6 +83,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
                 behaviour.Visuals.localScale = Vector3.one;
             }
             
+            OnItemUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
             _onUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
@@ -93,7 +97,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
                 behaviour.SetVisualsAsChild();
             }
             
-            _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
+            OnItemUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
+           _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void Drop()
