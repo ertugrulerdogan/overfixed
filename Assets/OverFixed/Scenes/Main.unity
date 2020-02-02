@@ -1080,7 +1080,7 @@ Transform:
   - {fileID: 1760137353}
   - {fileID: 1554703058}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &640768857
 GameObject:
@@ -1910,6 +1910,8 @@ MonoBehaviour:
   _scrap: {fileID: 523527661656636402, guid: da01abc4dacd5df4a92ea8456af08573, type: 3}
   _ship: {fileID: 8076948564719973635, guid: 4400e54f6a57f4142935032aebd07cc6, type: 3}
   _bullet: {fileID: 1938234617150232996, guid: eb5b2b2b387269c418c440788249adda, type: 3}
+  _explosion: {fileID: 6648375400382107996, guid: 823f98fa4360bd54eae793967411f199,
+    type: 3}
   _uiManager: {fileID: 1610409893}
   _platformBehaviours:
   - {fileID: 463611500}
@@ -2209,7 +2211,7 @@ PrefabInstance:
     - target: {fileID: 771278786601684165, guid: 9a68caf156a634444948c2e0b30b97df,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 771278786601684165, guid: 9a68caf156a634444948c2e0b30b97df,
         type: 3}

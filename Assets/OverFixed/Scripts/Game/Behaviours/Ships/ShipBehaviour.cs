@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DG.Tweening;
+using OverFixed.Scripts.Game.Behaviours.Explosion;
 using OverFixed.Scripts.Game.Behaviours.Hittables;
 using OverFixed.Scripts.Game.Models.Ships;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
     {
         public Ship Ship;
         private Pool _pool;
+        private ExplosionBehaviour.Pool _explosionPool;
         private bool _isMoving;
 
         private Action<float> _resultAction;
@@ -20,9 +22,10 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         public float AfterburnerAmount;
 
         [Inject]
-        public void Initialize(Pool pool)
+        public void Initialize(ExplosionBehaviour.Pool explosionPool, Pool pool)
         {
             _pool = pool;
+            _explosionPool = explosionPool;
         }
 
         public void Init(ShipState state, Action<float> resultAction)
@@ -198,6 +201,10 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             if (Ship.CurrentHealth < 0.1f)
             {
                 Destruct();
+                
+                var explosion =_explosionPool.Spawn();
+                explosion.transform.position = transform.position;
+
                 _resultAction?.Invoke(-Ship.Info.WarPointNegative);
             }
         }

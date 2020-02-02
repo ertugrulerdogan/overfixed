@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using OverFixed.Scripts.Game.Behaviours.Bullets;
 using OverFixed.Scripts.Game.Behaviours.Drones;
+using OverFixed.Scripts.Game.Behaviours.Explosion;
 using OverFixed.Scripts.Game.Behaviours.Items;
 using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Behaviours.Ships;
@@ -18,6 +19,7 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private GameObject _scrap;
         [SerializeField] private GameObject _ship;
         [SerializeField] private GameObject _bullet;
+        [SerializeField] private GameObject _explosion;
         [SerializeField] private UIManager _uiManager;
         [SerializeField] private PlatformBehaviour[] _platformBehaviours;
         
@@ -38,6 +40,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindInstance(_uiManager).AsSingle();
 
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
+            Container.BindMemoryPool<ExplosionBehaviour, ExplosionBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_explosion);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();
             Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
             Container.BindMemoryPool<DroneBehaviour, DroneBehaviour.Pool>().WithInitialSize(20).FromComponentInNewPrefab(_drone);
