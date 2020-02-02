@@ -15,6 +15,8 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         private Pool _pool;
         private bool _isMoving;
 
+        private Action<float> _resultAction;
+
         public float AfterburnerAmount;
 
         [Inject]
@@ -23,10 +25,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             _pool = pool;
         }
 
-        public void Init(ShipState state)
+        public void Init(ShipState state, Action<float> resultAction)
         {
             Ship.State = state;
 
+            _resultAction = resultAction;
             foreach (var part in Ship.ShipSections)
             {
                 part.FireAmount = 0f;
@@ -80,6 +83,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             {
                 Ship.Platform.IsPlatformOccupied = false;
                 _isMoving = false;
+                _resultAction?.Invoke(Ship.Info.WarPointPositive);
                 onComplete?.Invoke();
             });
 
@@ -166,6 +170,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
          
         private void LateUpdate()
         {
+            if (_isMoving)
+            {
+                return;
+            }
+
             switch (Ship.State)
             {
                 case ShipState.Damaged:
@@ -189,6 +198,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
             if (Ship.CurrentHealth < 0.1f)
             {
                 Destruct();
+                _resultAction?.Invoke(-Ship.Info.WarPointNegative);
             }
         }
 

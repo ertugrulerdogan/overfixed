@@ -45,18 +45,22 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             _mainCamera = mainCamera;
         }
 
-        private void Awake()
+        private void Start()
         {
-            _lastPosition = transform.position;
+            transform.eulerAngles = Vector3.zero;
+            
+            DirectionalInput.OnChanged += DirectionalInput_OnChanged;
         }
 
         private void FixedUpdate()
         {
+            if (!_canMove) return;
+            
             Move();
             
             Velocity = transform.position - _lastPosition;
             _lastPosition = transform.position;
-
+            
             if (Velocity.magnitude > 0.1f)
             {
                 transform.forward = Velocity.normalized;
@@ -77,5 +81,14 @@ namespace OverFixed.Scripts.Game.Behaviours.Character.Movement
             
             return Quaternion.Euler(0f, _mainCamera.transform.eulerAngles.y, 0f) * _movementAmount;
         }
+        
+        private void DirectionalInput_OnChanged()
+        {
+            DirectionalInput.OnChanged -= DirectionalInput_OnChanged;
+
+            _lastPosition = transform.position;
+            _canMove = true;
+        }
+
     }
 }
