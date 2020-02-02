@@ -211,6 +211,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Ships
         private void SpawnExplosion()
         {
             var explosion = _explosionPool.Spawn();
+            explosion.transform.localScale = Vector3.one * 3f;
             explosion.transform.position = transform.position;
         }
 
