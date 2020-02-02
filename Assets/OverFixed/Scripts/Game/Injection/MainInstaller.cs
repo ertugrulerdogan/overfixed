@@ -27,6 +27,7 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private GameObject _extinguisher;
         [SerializeField] private GameObject _wrench;
         [SerializeField] private GameObject _cutter;
+        [SerializeField] private GameObject _scatter;
 
         [SerializeField] private DroneBehaviour _drone;
         
@@ -49,6 +50,7 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindMemoryPool<ItemBehaviour<Wrench>, ItemBehaviour<Wrench>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_wrench);
             Container.BindMemoryPool<ItemBehaviour<Rifle>, ItemBehaviour<Rifle>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_rifle);
             Container.BindMemoryPool<ItemBehaviour<Cutter>, ItemBehaviour<Cutter>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_cutter);
+            Container.BindFactory<ParticleSystem, PlaceholderFactory<ParticleSystem>>().FromComponentInNewPrefab(_scatter);
         }
     }
 }

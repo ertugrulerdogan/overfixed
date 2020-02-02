@@ -132,6 +132,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             {
                 if (_hasItem)
                 {
+                    _accessibleItemBehaviours.Remove(_currentItemBehaviourBase);
                     Drop();
                 }
                 

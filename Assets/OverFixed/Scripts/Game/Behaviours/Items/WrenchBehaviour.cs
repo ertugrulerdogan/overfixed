@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using DG.Tweening;
 using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Models.Data;
 using OverFixed.Scripts.Game.Models.Items;
@@ -15,13 +16,17 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
         [SerializeField] private Transform _visuals;
         
         private TeamData _teamData;
+        private PlaceholderFactory<ParticleSystem> _scatterParticlePool;
+        private Tween _particleTween;
+
         private Vector3 _initialVisualPosition;
         private Vector3 _initialVisualRotation;
         
         [Inject]
-        public void Initialize(TeamData teamData)
+        public void Initialize(TeamData teamData, PlaceholderFactory<ParticleSystem> scatterPool)
         {
             _teamData = teamData;
+            _scatterParticlePool = scatterPool;
         }
 
         private void Start()
@@ -44,6 +49,30 @@ namespace OverFixed.Scripts.Game.Behaviours.Items
             Visuals.SetParent(transform);
             Visuals.localPosition = _initialVisualPosition;
             Visuals.localEulerAngles = _initialVisualRotation;
+        }
+
+        private void OnDisable()
+        {
+            _particleTween?.Kill();
+            _particleTween = null;
+        }
+
+        private void LateUpdate()
+        {
+            if (Item.Using && _particleTween == null)
+            {
+                _particleTween = DOVirtual.DelayedCall(0.8f, () =>
+                {
+                    var scatter = _scatterParticlePool.Create();
+                    scatter.transform.position = transform.position;
+                    scatter.transform.rotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                }).SetLoops(-1);
+            }
+            else if (!Item.Using && _particleTween != null)
+            {
+                _particleTween.Kill();
+                _particleTween = null;
+            }
         }
     }
 }

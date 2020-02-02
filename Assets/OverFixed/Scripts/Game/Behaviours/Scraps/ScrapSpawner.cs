@@ -20,7 +20,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
             {
                 var scrap = _scrapPool.Spawn();
                 scrap.transform.position = position;
-                scrap.Rigidbody.velocity += Vector3.up + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
+                scrap.Rigidbody.velocity += Vector3.up + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f) * 0.2f);
             }
 
             _accumulated -= curRelease * ScrapBehaviour.ScrapContribution;

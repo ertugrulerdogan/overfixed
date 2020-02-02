@@ -1922,6 +1922,7 @@ MonoBehaviour:
     type: 3}
   _wrench: {fileID: 8435950455176072990, guid: 5f9817939bd0d4e409ef14795a505f79, type: 3}
   _cutter: {fileID: 5979168847656924065, guid: 3eae06894313a9342a48dda45bb8ed19, type: 3}
+  _scatter: {fileID: 506187960144588453, guid: 7fecab305e7f59142b8ea525b6376d03, type: 3}
   _drone: {fileID: -7201226400876801954, guid: d52ee4743643c534b98424885d53612a, type: 3}
 --- !u!1001 &1553942018
 PrefabInstance:
