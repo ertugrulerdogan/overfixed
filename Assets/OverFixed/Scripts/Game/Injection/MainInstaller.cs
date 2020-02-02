@@ -6,6 +6,7 @@ using OverFixed.Scripts.Game.Behaviours.Scraps;
 using OverFixed.Scripts.Game.Behaviours.Ships;
 using OverFixed.Scripts.Game.Controllers;
 using OverFixed.Scripts.Game.Models.Data;
+using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
 using Zenject;
 
@@ -20,12 +21,13 @@ namespace OverFixed.Scripts.Game.Injection
         [SerializeField] private UIManager _uiManager;
         [SerializeField] private PlatformBehaviour[] _platformBehaviours;
         
-        [SerializeField] private RifleBehaviour _rifleBehaviour;
-        [SerializeField] private ExtinguisherBehaviour _extinguisherBehaviour;
-        [SerializeField] private WrenchBehaviour _wrenchBehaviour;
-        [SerializeField] private CutterBehaviour _cutterBehaviour;
-        [SerializeField] private DroneBehaviour _drone;
+        [SerializeField] private GameObject _rifle;
+        [SerializeField] private GameObject _extinguisher;
+        [SerializeField] private GameObject _wrench;
+        [SerializeField] private GameObject _cutter;
 
+        [SerializeField] private DroneBehaviour _drone;
+        
         public override void InstallBindings()
         {
             Container.BindInstance(_mainCamera).AsSingle().NonLazy();
@@ -38,14 +40,12 @@ namespace OverFixed.Scripts.Game.Injection
             Container.BindMemoryPool<ShipBehaviour, ShipBehaviour.Pool>().WithInitialSize(10).FromComponentInNewPrefab(_ship);
             Container.BindInterfacesAndSelfTo<TestController>().AsSingle();
             Container.BindMemoryPool<BulletBehaviour, BulletBehaviour.Pool>().WithInitialSize(100).FromComponentInNewPrefab(_bullet);
-            Container.BindInstance(_rifleBehaviour).AsSingle();
-            Container.BindInstance(_extinguisherBehaviour).AsSingle();
-            Container.BindInstance(_wrenchBehaviour).AsSingle();
-            Container.BindInstance(_cutterBehaviour).AsSingle();
-            Container.Bind<ItemController>().AsSingle().NonLazy();
-            Container.BindInstance(new ItemBehaviourBase[] {_wrenchBehaviour, _extinguisherBehaviour, _rifleBehaviour, _cutterBehaviour});
             Container.BindMemoryPool<DroneBehaviour, DroneBehaviour.Pool>().WithInitialSize(20).FromComponentInNewPrefab(_drone);
             Container.BindInstance<IList<PlatformBehaviour>>(_platformBehaviours).AsSingle();
+            Container.BindMemoryPool<ItemBehaviour<Extinguisher>, ItemBehaviour<Extinguisher>.Pool>().WithInitialSize(20).FromComponentInNewPrefab(_extinguisher);
+            Container.BindMemoryPool<ItemBehaviour<Wrench>, ItemBehaviour<Wrench>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_wrench);
+            Container.BindMemoryPool<ItemBehaviour<Rifle>, ItemBehaviour<Rifle>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_rifle);
+            Container.BindMemoryPool<ItemBehaviour<Cutter>, ItemBehaviour<Cutter>.Pool>().WithInitialSize(4).FromComponentInNewPrefab(_cutter);
         }
     }
 }

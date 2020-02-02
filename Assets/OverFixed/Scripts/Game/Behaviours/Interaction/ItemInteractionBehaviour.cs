@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OverFixed.Scripts.Game.Behaviours.Character.Input;
@@ -10,17 +9,12 @@ using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Interaction
 {
-    [Serializable] public class ItemEvent : UnityEvent<Type>{}
-    
     [RequireComponent(typeof(IInteractionInput))]
     public class ItemInteractionBehaviour : MonoBehaviour
     {
         [SerializeField] private Transform _itemContainer;
-        
-        [SerializeField] private ItemEvent _onPickUp;
-        [SerializeField] private ItemEvent _onDrop;
-        [SerializeField] private ItemEvent _onUseBegin;
-        [SerializeField] private ItemEvent _onUseEnd;
+        [SerializeField] private UnityEvent _onPickUp;
+        [SerializeField] private UnityEvent _onUsing;
             
         private IInteractionInput _interactionInput;
         private IInteractionInput InteractionInput
@@ -35,14 +29,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private bool _hasItem;
         private bool _shouldPickItem;
         private ItemBehaviourBase _currentItemBehaviourBase;
-        private IList<ItemBehaviourBase> _interactableItemBehaviours;
         private IList<ItemBehaviourBase> _accessibleItemBehaviours;
-
-        [Inject]
-        public void Initialize(ItemBehaviourBase[] items)
-        {
-            _interactableItemBehaviours = items;
-        }
         
         private void Awake()
         {
@@ -74,15 +61,11 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
         private void BeginUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = true;
-            
-            _onUseBegin?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void EndUse()
         {
             _currentItemBehaviourBase.BoundItem.Using = false;
-         
-            _onUseEnd?.Invoke(_currentItemBehaviourBase.GetType());
         }
 
         private void Drop()
@@ -92,8 +75,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
             _currentItemBehaviourBase.BoundItem.Using = false;
             
             _currentItemBehaviourBase.transform.SetParent(null);
-            
-            _onDrop.Invoke(_currentItemBehaviourBase.GetType());
+            _currentItemBehaviourBase.Drop();
             _currentItemBehaviourBase = null;
         }
 
@@ -116,14 +98,14 @@ namespace OverFixed.Scripts.Game.Behaviours.Interaction
 
         private void InteractionInput_OnPick()
         {
-            if (_hasItem)
+            if(_accessibleItemBehaviours.Count > 0)
             {
-                Drop();
-            }
-            else if(_accessibleItemBehaviours.Count > 0)
-            {
+                if (_hasItem)
+                {
+                    Drop();
+                }
+                
                 Pick(GetClosestItem());
-                _onPickUp?.Invoke(_currentItemBehaviourBase.GetType());
             }
         }
         
