@@ -1,6 +1,5 @@
 using OverFixed.Scripts.Game.Models.Items;
 using UnityEngine;
-using Zenject;
 
 namespace OverFixed.Scripts.Game.Behaviours.Items
 {

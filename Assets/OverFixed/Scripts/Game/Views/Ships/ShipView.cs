@@ -10,7 +10,6 @@ namespace OverFixed.Scripts.Game.Views.Ships
     public class ShipView : MonoBehaviour
     {
         private Ship _ship;
-        private StatusBar _bar;
 
         private UIManager _uiManager;
 
@@ -23,6 +22,8 @@ namespace OverFixed.Scripts.Game.Views.Ships
 
         private float _timer;
 
+        private NewStatusBar _statusBar;
+
         [Inject]
         public void Initialize(UIManager manager)
         {
@@ -31,27 +32,32 @@ namespace OverFixed.Scripts.Game.Views.Ships
 
         public void Awake()
         {
-            var statusPrefab = Resources.Load<GameObject>("UI/StatusBar");
+            _shipBehaviour = GetComponent<ShipBehaviour>();
+            var statusPrefab = Resources.Load<GameObject>("UI/ShipStatsContainer");
             if (statusPrefab != null)
             {
                 var go = Instantiate(statusPrefab, _uiManager.BarParent);
                 if (go != null)
                 {
-                    _bar = go.GetComponentInChildren<StatusBar>(true);
-                    _bar.Init(this);
+                    _statusBar = go.GetComponent<NewStatusBar>();
+                    _statusBar.Bind(_shipBehaviour);
+                    _statusBar.gameObject.SetActive(false);
                 }
             }
-
-            _shipBehaviour = GetComponent<ShipBehaviour>();
         }
         
         public void Bind(Ship ship) 
         { 
            _ship = ship;
-            if (_bar != null)
-            {
-                _bar.gameObject.SetActive(true);
-            }
+            // if (_bar != null)
+            // {
+            //     _bar.gameObject.SetActive(true);
+            // }
+        }
+
+        private void OnEnable()
+        {
+            _statusBar.gameObject.SetActive(true);
         }
 
         private float _initialExtinguishDuration;
@@ -62,7 +68,7 @@ namespace OverFixed.Scripts.Game.Views.Ships
             _timer -= Time.deltaTime;
 
             AfterBurner.SetThrustAmount(_shipBehaviour.AfterburnerAmount);
-            _bar.UpdateHealth(_ship.CurrentHealth, _ship.Info.MaxHealth);
+            // _bar.UpdateHealth(_ship.CurrentHealth, _ship.Info.MaxHealth);
 
             for (var i = 0; i < _ship.ShipSections.Count; i++)
             {
@@ -74,28 +80,29 @@ namespace OverFixed.Scripts.Game.Views.Ships
             {
                 _timer = 2f;
                 _initialExtinguishDuration = _ship.FireExtinguishDuration;
-                _bar.UpdateFireExtinguish(_ship.FireExtinguishDuration / _ship.Info.ExtinguisherDuration);
+                // _bar.UpdateFireExtinguish(_ship.FireExtinguishDuration / _ship.Info.ExtinguisherDuration);
             }
 
             if (Math.Abs(_initialSmokeDuration - _ship.SmokeRepairDuration) > 0.1f && _ship.SmokeRepairDuration > 0)
             {
                 _timer = 2f;
                 _initialSmokeDuration = _ship.SmokeRepairDuration;
-                _bar.UpdateSmokeRepair(_ship.SmokeRepairDuration / _ship.Info.SmokeDuration);
+                // _bar.UpdateSmokeRepair(_ship.SmokeRepairDuration / _ship.Info.SmokeDuration);
             }
 
             if (_timer < 0f)
             {
-                _bar.HideFireAndSmoke();
+                // _bar.HideFireAndSmoke();
             }
         }
 
         private void OnDisable()
         {
-            if (_bar != null)
-            {
-                _bar.gameObject.SetActive(false);
-            }
+            // if (_bar != null)
+            // {
+            //     _bar.gameObject.SetActive(false);
+            // }
+            _statusBar.gameObject.SetActive(false);
         }
     }
 }

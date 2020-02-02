@@ -1,15 +1,14 @@
-using System;
-using OverFixed.Scripts.Game.Models;
+using System.Globalization;
 using OverFixed.Scripts.Game.Models.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace OverFixed.Scripts.Game.Views
+namespace OverFixed.Scripts.Game.Views.UI
 {
     public class ScrapsView : MonoBehaviour
     {
-        [SerializeField] private Image _image;
+        [SerializeField] private Text _text;
         private TeamData _teamData;
         
         [Inject]
@@ -20,7 +19,7 @@ namespace OverFixed.Scripts.Game.Views
 
         private void Update()
         {
-            _image.fillAmount = _teamData.Scrap / GameRules.MaxScrapAmount;
+            _text.text = _teamData.Scrap.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
