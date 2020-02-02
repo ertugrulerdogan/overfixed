@@ -8,7 +8,7 @@ namespace OverFixed.Scripts.Game.Behaviours.Scraps
 {
     public class ScrapBehaviour : MonoBehaviour, IPickupable
     {
-        public const float ScrapContribution = 0.5f;
+        public const float ScrapContribution = 2.5f;
         
         public Rigidbody Rigidbody { get; private set; }
         
